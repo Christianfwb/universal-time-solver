@@ -1,0 +1,18 @@
+# pyproject.toml
+[project]
+name = "universal_time_solver"
+version = "0.1.0"
+description = "Time/Frequency toolkit + neutral protocol layer based on the Frequenzgesetz by Christian Berrang."
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [{name="Christian Berrang", email="christian.berrang@example.com"}] # BITTE E-MAIL ANPASSEN
+keywords = ["physics", "time", "frequency", "mass", "consciousness", "ontology", "ai-ethics"]
+
+dependencies = [
+    # keine direkten dependencies für das Basispaket
+]
+
+[project.urls]
+Homepage = "https://github.com/Christianfwb/frequenzprojekt" # BITTE ANPASSEN
+Repository = "https://github.com/Christianfwb/frequenzprojekt" # BITTE ANPASSEN
