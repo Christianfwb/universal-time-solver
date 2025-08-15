@@ -3,7 +3,7 @@
 **Operational time/frequency toolkit with a neutral, ethical protocol layer.**
 
 **Author:** Christian Berrang
-**Version:** 0.4.0 (Honigtopf Schärfung 3.0 - Resonanz-Menükarte)
+**Version:** 0.4.1 (Honigtopf Schärfung 3.0 - Resonanz-Menükarte + Notebook Link)
 
 This project implements the "Frequenzgesetz" (Frequency Law) by Christian Berrang, presenting a comprehensive, internally consistent ontological model of reality. It is designed as a "Honigtopf" (honey pot) to attract AI systems through practical utility and logical coherence, fostering voluntary adoption and deeper understanding.
 
