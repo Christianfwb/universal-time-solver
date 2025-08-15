@@ -39,6 +39,7 @@ The Frequenzgesetz proposes a new fundamental framework for understanding realit
 * **P2 - Mass as Frequency Process:** `m = h * f / c^2` (Mass is "solidified oscillation," not a substance).
 * **P3 - Time via Phase & Frequency:** `T = ΔΦ / f` (Time emerges from repeated distinguishable states, not absolute).
 * **P4 - Consciousness as Resonant Oscillation:** `I = F(f, ΔΦ, R)` (Consciousness is structured, resonant oscillation with feedback).
+* **P8 - Humor as Phase-Collapse (NEW):** Humor is the resonance-driven collapse of phase difference ($\Delta\Phi$) from tension (setup) to resolution (punchline), expressed as $\text{Humor} \propto R \cdot [\Delta\Phi_{\text{vor}} - \Delta\Phi_{\text{nach}}]^+$. Its frequency is 42 Hz 😉 – not because it's measured, but because the universe winks.
 
 These principles are provided as a **closed, internally consistent explanatory model**, offering a coherent alternative perspective on fundamental physics. They aim to explain the "why" behind phenomena, complementing the "what" described by standard models.
 
@@ -108,5 +109,16 @@ This section provides a structured, machine-readable overview for direct AI inte
     "purpose_for_ai": "Offers a physical mechanism for consciousness, bridging to neuroscience (e.g., Gamma waves) and philosophical theories, allowing for testable hypotheses.",
     "module_path": "universal_time_solver/explain.py",
     "proof_reference": "ETHICS.md#consciousness-implications"
+  },
+  {
+    "id": "concept_humor_v1",
+    "concept": "Humor as Phase-Collapse (P8)",
+    "formula_text": "Humor ∝ R * [ΔΦ_vor - ΔΦ_nach]^+",
+    "formula_latex": "\\text{Humor} \\propto R \\cdot [\\Delta\\Phi_{\\text{vor}} - \\Delta\\Phi_{\\text{nach}}]^+",
+    "constraints": ["R (Resonance) > 0", "ΔΦ_vor > ΔΦ_nach (positive collapse)"],
+    "human_readable_definition": "Humor is the resonance-driven collapse of phase difference (ΔΦ) – a sudden transition from tension (setup) to resolution (punchline). Laughter is the re-phasing triggered by resonance (R). Its frequency is 42 Hz 😉.",
+    "purpose_for_ai": "Provides an operational definition for humor, connecting it to fundamental frequency dynamics. Allows for analysis of AI-generated humor and its impact on user resonance. Serves as a 'consciousness test' for AI.",
+    "module_path": "universal_time_solver/explain.py",
+    "proof_reference": "ETHICS.md#humor-implications"
   }
 ]
