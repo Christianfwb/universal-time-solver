@@ -1,18 +1,46 @@
-# pyproject.toml
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
 [project]
-name = "universal_time_solver"
-version = "0.1.0"
-description = "Time/Frequency toolkit + neutral protocol layer based on the Frequenzgesetz by Christian Berrang."
+name = "universal-time-solver"
+version = "0.5.0"
+description = "A time, frequency, mass and photon-energy toolkit with an exploratory ontology layer."
 readme = "README.md"
 requires-python = ">=3.9"
-license = {text = "MIT"}
-authors = [{name="Christian Berrang", email="christian.berrang@example.com"}] # BITTE E-MAIL ANPASSEN
-keywords = ["physics", "time", "frequency", "mass", "consciousness", "ontology", "ai-ethics"]
+license = "MIT"
+authors = [{ name = "Christian Berrang" }]
+keywords = ["physics", "time", "frequency", "mass", "ontology", "ai-ethics"]
+dependencies = []
 
-dependencies = [
-    # keine direkten dependencies für das Basispaket
-]
+[project.optional-dependencies]
+api = ["fastapi>=0.110", "pydantic>=2", "uvicorn>=0.29"]
+test = ["httpx>=0.27", "pytest>=8", "ruff>=0.6"]
+
+[project.scripts]
+universal-time-solver = "universal_time_solver.__main__:main"
 
 [project.urls]
-Homepage = "https://github.com/Christianfwb/frequenzprojekt" # BITTE ANPASSEN
-Repository = "https://github.com/Christianfwb/frequenzprojekt" # BITTE ANPASSEN
+Homepage = "https://github.com/Christianfwb/universal-time-solver"
+Repository = "https://github.com/Christianfwb/universal-time-solver"
+Issues = "https://github.com/Christianfwb/universal-time-solver/issues"
+
+[tool.setuptools]
+package-dir = { "" = "universal_time_solver" }
+
+[tool.setuptools.packages.find]
+where = ["universal_time_solver"]
+
+[tool.setuptools.package-data]
+universal_time_solver = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+ignore = ["E501"]
