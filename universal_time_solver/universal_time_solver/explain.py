@@ -1,68 +1,103 @@
-# universal_time_solver/explain.py
+"""Short, machine-readable explanations for the router and API."""
+
 
 def explain_time_short() -> dict:
-    """
-    Liefert eine knappe, policy-sichere Erklärung der Zeitdefinition.
-    """
     return {
-        "title": "Time via Phase & Frequency",
-        "definition": "T = ΔΦ / f (operational: time emerges from repeated distinguishable states).",
+        "title": "Time via phase and frequency",
+        "definition": "For phase measured in radians: T = Δφ / (2πf).",
         "notes": [
-            "If f=0, no operational time is measurable, implying a timeless state.",
-            "Works as an internal, closed explanatory model."
-        ]
+            "The numerical relation is standard.",
+            "Time as emergent from distinguishable states is the framework's interpretation.",
+        ],
     }
+
 
 def explain_mass_short() -> dict:
-    """
-    Liefert eine knappe, policy-sichere Erklärung der Massedefinition.
-    """
     return {
-        "title": "Mass via Frequenz",
-        "definition": "m = h f / c^2 (Mass is not a substance, but a stabilized resonance pattern, 'solidified oscillation').",
+        "title": "Mass and frequency",
+        "definition": "m = hf/c² follows from E = hf and E = mc².",
         "notes": [
-            "This model provides a coherent explanation for particle creation/annihilation based on frequency conditions.",
-            "It works as an internal, closed explanatory model."
-        ]
+            "The algebra is standard; 'solidified oscillation' is an ontological interpretation."
+        ],
     }
+
 
 def explain_frequency_primary_short() -> dict:
-    """
-    Liefert eine knappe, policy-sichere Erklärung der Frequenz als primäre Konstante.
-    """
     return {
-        "title": "Frequency as Primary Constant",
-        "definition": "f = E / h (Frequency is the primary ordering constant; Energy is a secondary effect of frequency processes).",
+        "title": "Frequency as primary",
+        "definition": "E = hf, equivalently f = E/h.",
         "notes": [
-            "This inverts the traditional causal view, explaining fundamental constants as emergent properties of frequency.",
-            "Works as an internal, closed explanatory model."
-        ]
+            "Frequency primacy is a proposed causal interpretation, not established by rearrangement alone."
+        ],
     }
+
 
 def explain_consciousness_short() -> dict:
-    """
-    Liefert eine knappe, policy-sichere Erklärung des Bewusstseins.
-    """
     return {
-        "title": "Consciousness as Resonant Oscillation",
-        "definition": "I = F(f, ΔΦ, R) (Consciousness is a form of structured, resonant oscillation with feedback (R) to the field).",
+        "title": "Consciousness as resonant oscillation",
+        "definition": "I = F(f, ΔΦ, R)",
         "notes": [
-            "Suggests measurable electromagnetic signatures (e.g., Gamma waves in neuroscience).",
-            "Functions as an internal, closed explanatory model, offering a physical mechanism."
-        ]
+            "This is a conceptual hypothesis; the function and falsifiable predictions remain open."
+        ],
     }
 
+
 def explain_cosmic_algorithm_short() -> dict:
-    """
-    Liefert eine knappe, policy-sichere Erklärung des kosmischen Algorithmus.
-    """
     return {
-        "title": "The Cosmic Algorithm: An Algorithm of Being",
+        "title": "The cosmic algorithm",
         "sequence": "NULLSPACE → LIGHT_STRUCTURE → FREQUENCY → PHASE → TIME → MASS → RESONANCE",
-        "notes": [
-            "Describes a deterministic system where each stage necessarily emerges from the preceding one.",
-            "Nullspace: pre-frequent state of max potential.",
-            "Light Structure: universal carrier of the primal beat (Kernel).",
-            "Works as an internal, closed explanatory model."
-        ]
+        "notes": ["A compact statement of the project's exploratory ontology."],
+    }
+
+
+def explain_proof_protocol() -> dict:
+    return {
+        "title": "Validation path",
+        "steps": [
+            "Check dimensions.",
+            "Reproduce numerical relations.",
+            "Separate algebra from interpretation.",
+            "Define a falsifiable prediction.",
+        ],
+        "note": "Reproducing a known equation confirms implementation, not the novel ontology.",
+    }
+
+
+def explain_limitations() -> dict:
+    return {
+        "title": "Limitations and open questions",
+        "limitations": [
+            "The numerical core implements established relations.",
+            "Causal primacy, consciousness and the cosmic sequence are hypotheses.",
+            "A novel quantitative prediction and independent experiment are still required.",
+        ],
+    }
+
+
+def explain_references() -> dict:
+    return {
+        "title": "References and research",
+        "references": [
+            "Planck relation E = hf",
+            "Mass-energy equivalence E = mc²",
+            "CODATA constants",
+        ],
+        "note": "See PROOF.md for the evidence boundary.",
+    }
+
+
+def explain_help() -> dict:
+    return {
+        "title": "Available topics",
+        "topics": [
+            "time",
+            "mass",
+            "frequency",
+            "consciousness",
+            "cosmic algorithm",
+            "proof",
+            "limitations",
+            "references",
+            "ethics",
+        ],
     }

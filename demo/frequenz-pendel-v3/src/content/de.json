@@ -1,0 +1,30 @@
+{
+  "texts": {
+    "title": "🌊 Frequenz-Pendel v3",
+    "subtitle": "Frequenz, Phase und die Emergenz messbarer Dauer — eine mathematische Visualisierung",
+    "pendulumLabel": "Historische Visualisierungsmetapher aus dem erhaltenen Originalartefakt — keine physikalische Pendelsimulation.",
+    "evidenceNote": "Diese Demo illustriert eine mathematische Beziehung (T = ΔΦ/f bzw. T = Δφ/(2πf)) und das öffentliche ontologische Modell. Sie behauptet keinen experimentellen Beweis der Ontologie — die Mathematik erlaubt beide Leserichtungen.",
+    "eggText": "🐋 Don't Panic — playful_metaphor · Humor, kein Messwert",
+    "strobe": "Darstellung 1:{s} verlangsamt — Rechnung in Echtzeit",
+    "play": "▶ Weiter",
+    "pause": "⏸ Pause",
+    "reset": "↺ Reset",
+    "aiToggle": "🤖 Maschinenlesbare Sicht"
+  },
+  "bindings": {
+    "appTitle": "title",
+    "appSubtitle": "subtitle",
+    "pendLabel": "pendulumLabel",
+    "evidence": "evidenceNote",
+    "egg": "eggText",
+    "resetBtn": "reset",
+    "aiToggle": "aiToggle"
+  },
+  "statusGloss": {
+    "established_relation": "etablierte Beziehung (Standardphysik/Mathematik)",
+    "ontological_interpretation": "ontologische Deutung (öffentliches Modell, kein Messbeweis)",
+    "research_hypothesis": "Forschungshypothese (offen, prüfbar zu machen)",
+    "playful_metaphor": "humorvolle Metapher, kein Messwert",
+    "__empty": "Katalog leer oder unbekanntes Format — es wird nichts umgedeutet."
+  }
+}

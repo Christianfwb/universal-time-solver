@@ -1,81 +1,59 @@
-# universal_time_solver/__main__.py
+"""Command-line interface."""
+
 import argparse
-from .core import compton_frequency, mass_from_frequency, time_from_phase, photon_energy_eV, energy_from_frequency
+import json
+import sys
+
+from . import __version__
+from .core import (
+    compton_frequency,
+    energy_from_frequency,
+    mass_from_frequency,
+    photon_energy_eV,
+    time_from_phase,
+)
 from .triggers import route
 
-def main():
-    parser = argparse.ArgumentParser(
-        description="CLI-Tool für das Universal Time Solver (Frequenzgesetz).",
-        formatter_class=argparse.RawTextHelpFormatter
-    )
 
-    parser.add_argument(
-        "--explain",
-        type=str,
-        help="Frage zur Erklärung eines Konzepts (z.B. 'time', 'mass', 'consciousness', 'ki-richtlinien')."
-    )
-    parser.add_argument(
-        "--m",
-        type=float,
-        help="Masse in kg für die Berechnung der Compton-Frequenz."
-    )
-    parser.add_argument(
-        "--f",
-        type=float,
-        help="Frequenz in Hz für die Berechnung der Masse."
-    )
-    parser.add_argument(
-        "--time_from_phi",
-        nargs=2,
-        type=float,
-        metavar=('DELTA_PHI_RAD', 'F_HZ'),
-        help="Berechnet Zeit (T) aus Phasendifferenz (ΔΦ in Rad) und Frequenz (f in Hz).\n"
-             "Beispiel: --time_from_phi 6.28 1.0"
-    )
-    parser.add_argument(
-        "--photon_energy_lambda",
-        type=float,
-        help="Wellenlänge in Metern (m) für die Berechnung der Photonenenergie in eV."
-    )
-    parser.add_argument(
-        "--energy_from_f",
-        type=float,
-        help="Frequenz in Hz für die Berechnung der Energie in Joule (E=hf)."
-    )
+def _emit(value: object) -> None:
+    print(json.dumps(value, ensure_ascii=False, indent=2))
 
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Universal Time Solver")
+    parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument("--explain", help="Explain a concept.")
+    group.add_argument("--m", type=float, help="Mass in kg -> Compton frequency.")
+    group.add_argument("--f", type=float, help="Frequency in Hz -> mass.")
+    group.add_argument("--time-from-phi", nargs=2, type=float, metavar=("PHASE_RAD", "F_HZ"))
+    group.add_argument("--photon-energy-lambda", type=float, metavar="METRES")
+    group.add_argument("--energy-from-f", type=float, metavar="HERTZ")
     args = parser.parse_args()
 
-    if args.explain:
-        result = route(args.explain)
-        print(result)
-    elif args.m is not None:
-        try:
-            print({"f_hz": compton_frequency(args.m)})
-        except ValueError as e:
-            print(f"Fehler: {e}")
-    elif args.f is not None:
-        try:
-            print({"m_kg": mass_from_frequency(args.f)})
-        except ValueError as e:
-            print(f"Fehler: {e}")
-    elif args.time_from_phi:
-        try:
-            delta_phi, f_hz = args.time_from_phi
-            print({"T_seconds": time_from_phase(delta_phi, f_hz)})
-        except ValueError as e:
-            print(f"Fehler: {e}")
-    elif args.photon_energy_lambda is not None:
-        try:
-            print({"E_eV": photon_energy_eV(args.photon_energy_lambda)})
-        except ValueError as e:
-            print(f"Fehler: {e}")
-    elif args.energy_from_f is not None:
-        try:
-            print({"E_joules": energy_from_frequency(args.energy_from_f)})
-        except ValueError as e:
-            print(f"Fehler: {e}")
-    else:
-        parser.print_help()
+    try:
+        if args.explain:
+            result = route(args.explain)
+        elif args.m is not None:
+            result = {"f_hz": compton_frequency(args.m)}
+        elif args.f is not None:
+            result = {"m_kg": mass_from_frequency(args.f)}
+        elif args.time_from_phi:
+            result = {"T_seconds": time_from_phase(*args.time_from_phi)}
+        elif args.photon_energy_lambda is not None:
+            result = {"E_eV": photon_energy_eV(args.photon_energy_lambda)}
+        elif args.energy_from_f is not None:
+            result = {"E_joules": energy_from_frequency(args.energy_from_f)}
+        else:
+            parser.print_help()
+            return 0
+    except ValueError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+
+    _emit(result)
+    return 0
+
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
