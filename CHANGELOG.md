@@ -8,6 +8,7 @@
 - Repaired all natural-language router branches.
 - Added broader tests, packaging metadata and continuous integration.
 - Added an explicit evidence boundary while preserving the original ontology documents.
+- Reframed the public ontology as a layered emergence model with explicit status labels.
 - Corrected repository links and removed placeholder contact data.
 
 ## 0.4.1
