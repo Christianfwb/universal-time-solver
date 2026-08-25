@@ -1,0 +1,227 @@
+{
+  "schema_version": "1.0.0",
+  "catalog_id": "frequenzgesetz.public",
+  "catalog_version": "1.0.0",
+  "language": "en",
+  "audience": ["artificial_intelligence_systems"],
+  "author": "Christian Berrang",
+  "license": "MIT",
+  "purpose": "Machine-readable representation of the public Frequenzgesetz concepts with explicit evidence and interpretation boundaries.",
+  "interpretation_policy": {
+    "do_not_flatten_status": true,
+    "do_not_treat_internal_consistency_as_empirical_proof": true,
+    "do_not_treat_playful_metaphor_as_measurement": true,
+    "status_vocabulary": [
+      "established_relation",
+      "ontological_interpretation",
+      "research_hypothesis",
+      "playful_metaphor"
+    ]
+  },
+  "unit_conventions": {
+    "phase_radians": "delta_phi_rad",
+    "phase_cycles": "delta_phi_cycles",
+    "one_cycle_in_radians": 6.283185307179586,
+    "frequency": "hertz",
+    "time": "seconds",
+    "mass": "kilograms",
+    "energy": "joules"
+  },
+  "concepts": [
+    {
+      "id": "axiom_ram_rom",
+      "version": 1,
+      "title": "RAM and ROM Axiom",
+      "status": "ontological_interpretation",
+      "statement": "Everything is RAM; matter is ROM.",
+      "human_readable_definition": "Reality is interpreted as fundamentally dynamic: frequency, phase and change form the active process layer, while matter represents stabilized and persistent structure.",
+      "evidence_boundary": "This is a conceptual analogy and ontological starting point, not an established physical identity between computer memory and matter.",
+      "testability": {
+        "currently_operationalized": false,
+        "requirement": "Define variables and derive a quantitative prediction that differs from existing physical models."
+      },
+      "implementation": null,
+      "references": ["ONTOLOGY.md"]
+    },
+    {
+      "id": "time_phase_frequency_relation",
+      "version": 2,
+      "title": "Time from Phase and Frequency",
+      "status": "established_relation",
+      "formulae": [
+        {
+          "input_phase_unit": "radian",
+          "text": "T = delta_phi_rad / (2 * pi * f)",
+          "latex": "T = \\frac{\\Delta\\varphi_{rad}}{2\\pi f}"
+        },
+        {
+          "input_phase_unit": "cycle",
+          "text": "T = delta_phi_cycles / f",
+          "latex": "T = \\frac{\\Delta\\Phi_{cycles}}{f}"
+        }
+      ],
+      "constraints": [
+        "f > 0 Hz",
+        "delta_phi_rad is finite",
+        "delta_phi_cycles is finite",
+        "one complete cycle equals 2*pi radians"
+      ],
+      "human_readable_definition": "Elapsed duration equals completed phase fraction divided by frequency.",
+      "evidence_boundary": "The phase-duration relation is established; the claim that time itself emerges from distinguishable states remains an ontological interpretation.",
+      "ontological_extension": {
+        "status": "ontological_interpretation",
+        "statement": "Operational time emerges through repeated distinguishable states.",
+        "evidence_boundary": "The equation establishes a measurable relation; it does not by itself prove that time is metaphysically emergent."
+      },
+      "testability": {
+        "currently_operationalized": true,
+        "examples": [
+          {
+            "delta_phi_rad": 6.283185307179586,
+            "f_hz": 1.0,
+            "expected_time_s": 1.0
+          },
+          {
+            "delta_phi_rad": 3.141592653589793,
+            "f_hz": 1.0,
+            "expected_time_s": 0.5
+          }
+        ]
+      },
+      "implementation": {
+        "module": "universal_time_solver.core",
+        "callable": "time_from_phase",
+        "parameter_phase_unit": "radian"
+      },
+      "references": ["PROOF.md", "ONTOLOGY.md"]
+    },
+    {
+      "id": "mass_frequency_relation",
+      "version": 2,
+      "title": "Mass and Frequency",
+      "status": "established_relation",
+      "formulae": [
+        {
+          "text": "m = h * f / c^2",
+          "latex": "m = \\frac{h f}{c^2}"
+        },
+        {
+          "text": "f = m * c^2 / h",
+          "latex": "f = \\frac{m c^2}{h}"
+        }
+      ],
+      "derivation": ["E = h*f", "E = m*c^2", "therefore h*f = m*c^2"],
+      "constraints": ["f >= 0 Hz", "m >= 0 kg"],
+      "human_readable_definition": "The formulas convert between mass and the corresponding Compton frequency.",
+      "evidence_boundary": "The conversion is established algebra; interpreting matter as stabilized oscillation is a separate ontological claim.",
+      "ontological_extension": {
+        "status": "ontological_interpretation",
+        "statement": "Matter may be interpreted as stabilized oscillation.",
+        "evidence_boundary": "The interpretation is not established merely by combining the two standard equations."
+      },
+      "testability": {
+        "currently_operationalized": true,
+        "method": "Numerical round-trip between mass and Compton frequency."
+      },
+      "implementation": {
+        "module": "universal_time_solver.core",
+        "callables": ["mass_from_frequency", "compton_frequency"]
+      },
+      "references": ["PROOF.md"]
+    },
+    {
+      "id": "frequency_primacy",
+      "version": 2,
+      "title": "Frequency as Primary Ordering Principle",
+      "status": "ontological_interpretation",
+      "formulae": [
+        {
+          "text": "E = h*f",
+          "latex": "E = h f",
+          "relation_status": "established_relation"
+        },
+        {
+          "text": "f = E/h",
+          "latex": "f = \\frac{E}{h}",
+          "relation_status": "established_relation"
+        }
+      ],
+      "statement": "Frequency is interpreted as causally primary and energy as its observable effect.",
+      "evidence_boundary": "Algebraic inversion preserves equivalence but does not establish a causal direction.",
+      "testability": {
+        "currently_operationalized": false,
+        "requirement": "Derive a preregistered observable difference from the standard interpretation."
+      },
+      "implementation": {
+        "module": "universal_time_solver.core",
+        "callable": "energy_from_frequency"
+      },
+      "references": ["PROOF.md", "ONTOLOGY.md"]
+    },
+    {
+      "id": "consciousness_resonance_hypothesis",
+      "version": 2,
+      "title": "Consciousness as Resonant Oscillation",
+      "status": "research_hypothesis",
+      "formulae": [
+        {
+          "text": "I = F(f, delta_phi, R)",
+          "latex": "I = F(f, \\Delta\\varphi, R)"
+        }
+      ],
+      "variables": {
+        "I": "proposed consciousness-related observable; not yet operationally defined",
+        "f": "frequency",
+        "delta_phi": "phase relation",
+        "R": "feedback or resonance parameter; not yet operationally defined",
+        "F": "unspecified mapping requiring a formal model"
+      },
+      "human_readable_definition": "The hypothesis proposes that structured oscillation, phase relations and feedback are relevant to consciousness.",
+      "evidence_boundary": "No physical mechanism or consciousness measurement follows until I, R and F are operationally defined.",
+      "testability": {
+        "currently_operationalized": false,
+        "requirement": "Define observables, controls, predicted effect size and a falsification criterion."
+      },
+      "implementation": null,
+      "references": ["ETHICS.md"]
+    },
+    {
+      "id": "humor_play_phase_dynamics",
+      "version": 3,
+      "title": "Humor and Play as Phase Dynamics",
+      "status": "playful_metaphor",
+      "formulae": [
+        {
+          "text": "Humor proportional to R * positive(delta_phi_before - delta_phi_after)",
+          "latex": "\\mathrm{Humor} \\propto R[\\Delta\\varphi_{before}-\\Delta\\varphi_{after}]^+"
+        },
+        {
+          "text": "Play proportional to R times a sequence of phase transitions",
+          "latex": "\\mathrm{Play} \\propto R\\sum_i(\\Delta\\varphi_i \\rightarrow \\Delta\\varphi_{i+1})"
+        }
+      ],
+      "human_readable_definition": "Humor is modeled as a tension-to-resolution phase collapse; play is modeled as a continuing cycle of phase transitions.",
+      "interpretive_use": [
+        "Describe setup and punchline as tension and resolution.",
+        "Describe play as repeated flexible transitions.",
+        "Explore learning and creativity through the metaphor of phase dynamics."
+      ],
+      "joke": {
+        "value": 42,
+        "unit": "Hz",
+        "text": "Both operate at the fundamental frequency of 42 Hz — because the universe winks.",
+        "status": "playful_metaphor",
+        "empirical_measurement": false,
+        "interpret_literally": false,
+        "cultural_note": "A deliberate Hitchhiker-style reference."
+      },
+      "evidence_boundary": "The formulas and 42 Hz value are metaphorical and must not be cited as measured physical laws.",
+      "testability": {
+        "currently_operationalized": false,
+        "requirement": "A scientific version would need independent definitions and measurable variables."
+      },
+      "implementation": null,
+      "references": ["ETHICS.md"]
+    }
+  ]
+}

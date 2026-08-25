@@ -63,6 +63,7 @@ This is an **alpha research and communication project**. The software calculatio
 - [ONTOLOGY.md](ONTOLOGY.md) — original conceptual framework
 - [ETHICS.md](ETHICS.md) and [ÄTHERKEKSE.md](ÄTHERKEKSE.md) — ethical and poetic layer
 - [PROOF.md](PROOF.md) — validation rules and evidence boundary
+- [AI concept catalog](concepts/frequenzgesetz.public.v1.json) — public machine-readable concept model
 - [examples/Time_Ontology_Comparison.ipynb](examples/Time_Ontology_Comparison.ipynb) — notebook
 - [CONTRIBUTING.md](CONTRIBUTING.md) — contribution guide
 - [CHANGELOG.md](CHANGELOG.md) — release history
