@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frequenz-Pendel v2 — Frequency Pattern → Phase Differentiation → Measurable Duration</title>
+<style>
+:root{
+  --bg1:#1f283e; --bg2:#0c111c; --panel:#1a202c; --card:#2c3444;
+  --accent:#4ecdc4; --accent2:#45b7d1; --warn:#ffb86b;
+  --text:#e0e6ed; --muted:#a4b4c4; --border:rgba(78,205,196,.25);
+}
+*{box-sizing:border-box}
+body{
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  background:linear-gradient(135deg,var(--bg1),var(--bg2));
+  color:var(--text); margin:0; padding:16px; min-height:100vh;
+}
+.container{max-width:1100px;margin:0 auto;background:var(--panel);
+  border:1px solid var(--border);border-radius:16px;padding:24px;
+  box-shadow:0 10px 30px rgba(0,0,0,.5)}
+h1{color:var(--accent);font-size:1.6em;margin:0 0 4px;text-align:center}
+.subtitle{color:var(--muted);text-align:center;margin:0 0 18px;font-size:.95em}
+.arc{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.arc span{background:var(--card);border:1px solid var(--border);border-radius:20px;
+  padding:6px 14px;font-size:.85em;color:var(--accent)}
+.arc .arrow{background:none;border:none;color:var(--muted);padding:6px 0}
+
+.grid{display:grid;grid-template-columns:300px 1fr;gap:20px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+
+.panel{background:var(--card);border-radius:12px;padding:18px;border:1px solid var(--border)}
+.panel h2{color:var(--accent);font-size:1.05em;margin:0 0 14px}
+label{display:block;color:var(--muted);font-size:.85em;margin-bottom:4px}
+.ctl{margin-bottom:16px}
+input[type=range]{width:100%;accent-color:var(--accent)}
+input[type=number]{width:100%;padding:7px;background:#3e485e;border:1px solid #5a667d;
+  border-radius:6px;color:var(--text);font-size:1em}
+.rowvals{display:flex;gap:8px;align-items:center}
+.rowvals input{flex:1}
+.unit-toggle{display:flex;border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-top:6px}
+.unit-toggle button{flex:1;padding:6px;background:#3e485e;border:none;color:var(--muted);cursor:pointer;font-size:.85em}
+.unit-toggle button.active{background:var(--accent);color:#1a202c;font-weight:700}
+.btnrow{display:flex;gap:8px;margin-top:6px;flex-wrap:wrap}
+.btn{padding:9px 14px;border:none;border-radius:6px;cursor:pointer;font-size:.9em;transition:transform .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn-p{background:var(--accent);color:#1a202c;font-weight:700}
+.btn-s{background:#5a667d;color:var(--text)}
+.presets{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.presets button{text-align:left;background:#232a38;border:1px solid var(--border);
+  color:var(--text);padding:8px 10px;border-radius:6px;cursor:pointer;font-size:.82em}
+.presets button:hover{border-color:var(--accent)}
+.err{background:rgba(255,107,107,.12);color:#ff8080;border-left:3px solid #ff6b6b;
+  padding:8px 10px;border-radius:6px;font-size:.85em;display:none;margin-bottom:12px}
+
+.views{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:640px){.views{grid-template-columns:1fr}}
+.view{background:#232a38;border-radius:10px;padding:12px;border:1px solid rgba(255,255,255,.06)}
+.view h3{margin:0 0 8px;font-size:.85em;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+svg{width:100%;height:auto;display:block}
+.wide{grid-column:1/-1}
+
+.calc{margin-top:16px;background:#232a38;border-radius:10px;padding:16px;border:1px solid var(--border)}
+.formulas{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:640px){.formulas{grid-template-columns:1fr}}
+.formula{background:var(--card);border-radius:8px;padding:12px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.9em}
+.formula .tag{font-family:inherit;font-size:.75em;color:var(--muted);display:block;margin-bottom:6px;font-family:system-ui,sans-serif}
+.formula .res{color:var(--accent);font-weight:700;font-size:1.15em;display:block;margin-top:8px}
+.stats{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;font-size:.9em}
+.stats div span{color:var(--muted);display:block;font-size:.78em}
+.stats div b{color:var(--text);font-variant-numeric:tabular-nums}
+.note{margin-top:16px;color:var(--muted);font-size:.82em;line-height:1.5;border-top:1px solid rgba(255,255,255,.08);padding-top:12px}
+.egg{color:var(--warn)}
+@media(prefers-reduced-motion:reduce){.motion-note{display:block!important}}
+.motion-note{display:none;color:var(--warn);font-size:.8em;margin-top:8px}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>🌊 Frequenz-Pendel v2</h1>
+  <p class="subtitle">Frequenz, Phase und die Emergenz messbarer Dauer — eine mathematische Visualisierung</p>
+  <div class="arc">
+    <span>Frequency Pattern</span><span class="arrow">→</span>
+    <span>Phase Differentiation</span><span class="arrow">→</span>
+    <span>Measurable Duration</span>
+  </div>
+
+  <div class="grid">
+    <div class="panel">
+      <h2>⚙️ Parameter</h2>
+      <div id="err" class="err"></div>
+
+      <div class="ctl">
+        <label for="freq">Frequenz f (Hz)</label>
+        <div class="rowvals">
+          <input type="range" id="freqSlider" min="0.1" max="100" step="0.01" value="1">
+          <input type="number" id="freq" min="0.1" max="1000" step="0.01" value="1" style="max-width:90px">
+        </div>
+      </div>
+
+      <div class="ctl">
+        <label for="phase">Phasendifferenz ΔΦ (<span id="unitLabel">Zyklen</span>)</label>
+        <div class="rowvals">
+          <input type="range" id="phaseSlider" min="0" max="4" step="0.01" value="1">
+          <input type="number" id="phase" min="0" step="0.01" value="1" style="max-width:90px">
+        </div>
+        <div class="unit-toggle">
+          <button id="uCycles" class="active">Zyklen (turns)</button>
+          <button id="uRad">Radiant</button>
+        </div>
+      </div>
+
+      <div class="btnrow">
+        <button class="btn btn-p" id="playBtn">⏸ Pause</button>
+        <button class="btn btn-s" id="resetBtn">↺ Reset</button>
+      </div>
+
+      <div class="ctl" style="margin-top:18px">
+        <label>Reproduzierbare Beispiele</label>
+        <div class="presets">
+          <button data-f="1" data-c="1">1 Hz · 1 Zyklus → T = 1.000 s</button>
+          <button data-f="1" data-c="0.5">1 Hz · π rad (½ Zyklus) → T = 0.500 s</button>
+          <button data-f="2" data-c="1">2 Hz · 1 Zyklus → T = 0.500 s</button>
+          <button data-f="7.83" data-c="1">Schumann-Grundmode · 7.83 Hz</button>
+          <button data-f="42" data-c="1" class="egg">🐋 42 Hz — die Antwort (Humor, kein Messwert)</button>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="views">
+        <div class="view">
+          <h3>Phasenrad</h3>
+          <svg viewBox="0 0 220 220" aria-label="Phasenrad mit zwei Zeigern">
+            <circle cx="110" cy="110" r="90" fill="none" stroke="rgba(255,255,255,.15)" stroke-width="2"/>
+            <circle cx="110" cy="110" r="90" fill="none" stroke="rgba(78,205,196,.08)" stroke-width="16"/>
+            <path id="phaseArc" fill="rgba(78,205,196,.25)"/>
+            <line id="hand1" x1="110" y1="110" x2="110" y2="24" stroke="#4ecdc4" stroke-width="3" stroke-linecap="round"/>
+            <line id="hand2" x1="110" y1="110" x2="110" y2="24" stroke="#45b7d1" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="110" cy="110" r="5" fill="#e0e6ed"/>
+            <text x="110" y="14" fill="#a4b4c4" font-size="10" text-anchor="middle">0</text>
+            <text x="110" y="215" fill="#a4b4c4" font-size="10" text-anchor="middle">½ Zyklus (π)</text>
+          </svg>
+        </div>
+
+        <div class="view">
+          <h3>Historische Ansicht: Doppelpendel</h3>
+          <svg viewBox="0 0 220 220" aria-label="Zwei Pendel als historische Referenz">
+            <circle cx="75" cy="25" r="3" fill="#4ecdc4"/>
+            <circle cx="145" cy="25" r="3" fill="#45b7d1"/>
+            <line x1="75" y1="25" x2="145" y2="25" stroke="rgba(255,255,255,.2)" stroke-width="1.5" stroke-dasharray="4,4"/>
+            <g id="pend1"><line x1="75" y1="25" x2="75" y2="150" stroke="#4ecdc4" stroke-width="2.5"/><circle cx="75" cy="150" r="11" fill="#4ecdc4"/></g>
+            <g id="pend2"><line x1="145" y1="25" x2="145" y2="150" stroke="#45b7d1" stroke-width="2.5"/><circle cx="145" cy="150" r="11" fill="#45b7d1"/></g>
+            <text x="110" y="205" fill="#a4b4c4" font-size="9" text-anchor="middle">rein illustrativ — die Linie koppelt nicht</text>
+          </svg>
+          <p class="motion-note">Animation reduziert (Systemeinstellung erkannt)</p>
+        </div>
+
+        <div class="view wide">
+          <h3>Wellenform — Phasenverschiebung sichtbar</h3>
+          <svg viewBox="0 0 600 140" aria-label="Zwei Sinuswellen mit Phasenverschiebung">
+            <line x1="0" y1="70" x2="600" y2="70" stroke="rgba(255,255,255,.12)"/>
+            <path id="wave1" fill="none" stroke="#4ecdc4" stroke-width="2"/>
+            <path id="wave2" fill="none" stroke="#45b7d1" stroke-width="2"/>
+            <line id="durMarker1" y1="10" y2="130" stroke="#ffb86b" stroke-width="1.5" stroke-dasharray="3,3"/>
+            <line id="durMarker2" y1="10" y2="130" stroke="#ffb86b" stroke-width="1.5" stroke-dasharray="3,3"/>
+            <text id="durLabel" y="22" fill="#ffb86b" font-size="11" text-anchor="middle">T</text>
+          </svg>
+        </div>
+      </div>
+
+      <div class="calc">
+        <div class="formulas">
+          <div class="formula">
+            <span class="tag">Konvention v9.0 — Phase in Zyklen</span>
+            T = ΔΦ / f<br>
+            <span id="calc1" style="color:var(--muted)">= 1 / 1 Hz</span>
+            <span class="res" id="res1">T = 1.0000 s</span>
+          </div>
+          <div class="formula">
+            <span class="tag">Äquivalent — Phase in Radiant</span>
+            T = Δφ / (2π·f)<br>
+            <span id="calc2" style="color:var(--muted)">= 6.2832 / (2π·1 Hz)</span>
+            <span class="res" id="res2">T = 1.0000 s</span>
+          </div>
+        </div>
+        <div class="stats">
+          <div><span>Laufzeit t</span><b id="tRun">0.00 s</b></div>
+          <div><span>Ganze Zyklen</span><b id="cycFull">0</b></div>
+          <div><span>Angebrochener Zyklus</span><b id="cycPart">0.00</b></div>
+          <div><span>ΔΦ aktuell</span><b id="dphiNow">0.000 cyc</b></div>
+        </div>
+      </div>
+
+      <div class="note">
+        <b style="color:var(--accent)">Was zeigt diese Demo?</b> Eine mathematische Beziehung: Gibt man einer Schwingung
+        der Frequenz f eine Phasendifferenz ΔΦ, entspricht das einer eindeutigen Dauer T. Ein voller Zyklus (2π rad)
+        bei 1 Hz ergibt exakt 1 s; ein halber Zyklus exakt 0.5 s. Beide Formeln sind äquivalent — sie unterscheiden
+        sich nur in der Einheit der Phase. Die Visualisierung illustriert das öffentliche ontologische Modell
+        (Frequenz als Ausgangspunkt, Dauer als abgeleitete Größe), <i>beweist es aber nicht experimentell</i> —
+        die Mathematik erlaubt beide Leserichtungen.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+"use strict";
+/* ── core: reine Mathematik, keine DOM-Zugriffe ─────────────── */
+const core = {
+  TAU: 2 * Math.PI,
+  validate(f, phi) {
+    if (!Number.isFinite(f) || f <= 0) return "Frequenz muss eine endliche Zahl > 0 sein.";
+    if (!Number.isFinite(phi) || phi < 0) return "Phasendifferenz muss eine endliche Zahl ≥ 0 sein.";
+    return null;
+  },
+  durationFromCycles(cycles, f) { return cycles / f; },
+  durationFromRadians(rad, f) { return rad / (this.TAU * f); },
+  radToCycles(rad) { return rad / this.TAU; },
+  cyclesToRad(cyc) { return cyc * this.TAU; }
+};
+
+/* Selbsttest beim Laden — Konsole bleibt still wenn alles stimmt */
+(function selfTest(){
+  const eq = (a,b) => Math.abs(a-b) < 1e-12;
+  console.assert(eq(core.durationFromCycles(1,1), 1.0), "T(1cyc,1Hz)=1s");
+  console.assert(eq(core.durationFromRadians(Math.PI,1), 0.5), "T(π rad,1Hz)=0.5s");
+  console.assert(eq(core.durationFromCycles(1,2), 0.5), "T(1cyc,2Hz)=0.5s");
+  console.assert(eq(core.durationFromCycles(core.radToCycles(core.cyclesToRad(0.73)),3),
+                    core.durationFromCycles(0.73,3)), "Einheiten-Rundlauf");
+  console.assert(core.validate(0,1) !== null, "f=0 abgewiesen");
+  console.assert(core.validate(NaN,1) !== null, "NaN abgewiesen");
+  console.assert(core.validate(Infinity,1) !== null, "Infinity abgewiesen");
+})();
+
+/* ── ui ─────────────────────────────────────────────────────── */
+const $ = id => document.getElementById(id);
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+let unit = "cycles";          // "cycles" | "rad"
+let running = !reduced;
+let t = 0, lastFrame = null, rafId = null;
+
+function readInputs() {
+  const f = parseFloat($("freq").value);
+  const phiRaw = parseFloat($("phase").value);
+  const phiCycles = unit === "cycles" ? phiRaw : core.radToCycles(phiRaw);
+  return { f, phiRaw, phiCycles };
+}
+
+function showError(msg) {
+  const e = $("err");
+  if (msg) { e.textContent = "⚠ " + msg; e.style.display = "block"; }
+  else e.style.display = "none";
+  return !msg;
+}
+
+function fmt(x, d=4) {
+  if (!Number.isFinite(x)) return "—";
+  return x.toFixed(d);
+}
+
+function polar(cx, cy, r, angRad) {
+  // 0 oben, im Uhrzeigersinn
+  return [cx + r * Math.sin(angRad), cy - r * Math.cos(angRad)];
+}
+
+function updateStatic() {
+  const { f, phiRaw, phiCycles } = readInputs();
+  const err = core.validate(f, unit === "cycles" ? phiCycles : phiRaw);
+  if (!showError(err)) return;
+
+  const T1 = core.durationFromCycles(phiCycles, f);
+  const rad = core.cyclesToRad(phiCycles);
+  const T2 = core.durationFromRadians(rad, f);
+
+  $("calc1").textContent = `= ${fmt(phiCycles)} / ${fmt(f,2)} Hz`;
+  $("res1").textContent  = `T = ${fmt(T1)} s`;
+  $("calc2").textContent = `= ${fmt(rad)} / (2π·${fmt(f,2)} Hz)`;
+  $("res2").textContent  = `T = ${fmt(T2)} s`;
+
+  drawWave(f, phiCycles, T1);
+}
+
+function drawWave(f, phiCycles, T) {
+  const W = 600, H = 140, mid = 70, amp = 48;
+  const windowSec = Math.max(2 / f, T * 1.2, 0.5); // sichtbares Zeitfenster
+  const pts = (phase) => {
+    let d = "";
+    for (let x = 0; x <= W; x += 2) {
+      const time = (x / W) * windowSec;
+      const y = mid - amp * Math.sin(core.TAU * f * time + phase);
+      d += (x === 0 ? "M" : "L") + x.toFixed(1) + "," + y.toFixed(1);
+    }
+    return d;
+  };
+  $("wave1").setAttribute("d", pts(0));
+  $("wave2").setAttribute("d", pts(-core.cyclesToRad(phiCycles)));
+  // Dauer-Marker: von 0 bis T
+  const x1 = 0, x2 = Math.min(W, (T / windowSec) * W);
+  $("durMarker1").setAttribute("x1", x1); $("durMarker1").setAttribute("x2", x1);
+  $("durMarker2").setAttribute("x1", x2); $("durMarker2").setAttribute("x2", x2);
+  $("durLabel").setAttribute("x", (x1 + x2) / 2);
+  $("durLabel").textContent = `T = ${fmt(T,3)} s`;
+}
+
+function frame(ts) {
+  if (lastFrame === null) lastFrame = ts;
+  const dt = Math.min((ts - lastFrame) / 1000, 0.1);
+  lastFrame = ts;
+  if (running) t += dt;
+
+  const { f, phiCycles } = readInputs();
+  if (Number.isFinite(f) && f > 0) {
+    // Phasenrad: Zeiger 1 läuft, Zeiger 2 hinkt um ΔΦ hinterher
+    const a1 = core.TAU * f * t;
+    const a2 = a1 - core.cyclesToRad(phiCycles);
+    const [x1,y1] = polar(110,110,86,a1);
+    const [x2,y2] = polar(110,110,86,a2);
+    $("hand1").setAttribute("x2",x1); $("hand1").setAttribute("y2",y1);
+    $("hand2").setAttribute("x2",x2); $("hand2").setAttribute("y2",y2);
+
+    // Bogen zwischen den Zeigern (max 1 Zyklus angezeigt)
+    const arcCyc = phiCycles % 1;
+    const arcRad = core.cyclesToRad(arcCyc);
+    if (arcCyc > 0.001) {
+      const [ax,ay] = polar(110,110,86,a2);
+      const [bx,by] = polar(110,110,86,a1);
+      const large = arcRad > Math.PI ? 1 : 0;
+      $("phaseArc").setAttribute("d",
+        `M110,110 L${ax},${ay} A86,86 0 ${large} 1 ${bx},${by} Z`);
+    } else $("phaseArc").setAttribute("d","");
+
+    // Pendel: illustrativ, gleiche Frequenz, um ΔΦ versetzt (gedeckelt auf 2 Hz Optik)
+    const fVis = Math.min(f, 2);
+    const p1 = 0.35 * Math.sin(core.TAU * fVis * t);
+    const p2 = 0.35 * Math.sin(core.TAU * fVis * t - core.cyclesToRad(phiCycles));
+    $("pend1").setAttribute("transform", `rotate(${p1*57.2958} 75 25)`);
+    $("pend2").setAttribute("transform", `rotate(${p2*57.2958} 145 25)`);
+
+    // Zähler
+    const totalCycles = f * t;
+    $("tRun").textContent = fmt(t,2) + " s";
+    $("cycFull").textContent = Math.floor(totalCycles);
+    $("cycPart").textContent = fmt(totalCycles % 1, 2);
+    const dNow = unit === "cycles" ? fmt(phiCycles,3)+" cyc" : fmt(core.cyclesToRad(phiCycles),3)+" rad";
+    $("dphiNow").textContent = dNow;
+  }
+  rafId = requestAnimationFrame(frame);
+}
+
+/* ── Bedienung ──────────────────────────────────────────────── */
+function syncPair(sliderId, numId) {
+  $(sliderId).addEventListener("input", () => { $(numId).value = $(sliderId).value; updateStatic(); });
+  $(numId).addEventListener("input", () => {
+    const v = parseFloat($(numId).value);
+    if (Number.isFinite(v)) $(sliderId).value = Math.min(Math.max(v, $(sliderId).min), $(sliderId).max);
+    updateStatic();
+  });
+}
+syncPair("freqSlider","freq");
+syncPair("phaseSlider","phase");
+
+function setUnit(u) {
+  if (u === unit) return;
+  const phi = parseFloat($("phase").value);
+  if (Number.isFinite(phi)) {
+    const converted = u === "rad" ? core.cyclesToRad(phi) : core.radToCycles(phi);
+    $("phase").value = converted.toFixed(4);
+    $("phaseSlider").max = u === "rad" ? (4 * core.TAU).toFixed(2) : 4;
+    $("phaseSlider").value = Math.min(converted, $("phaseSlider").max);
+  }
+  unit = u;
+  $("unitLabel").textContent = u === "rad" ? "Radiant" : "Zyklen";
+  $("uCycles").classList.toggle("active", u === "cycles");
+  $("uRad").classList.toggle("active", u === "rad");
+  updateStatic();
+}
+$("uCycles").addEventListener("click", () => setUnit("cycles"));
+$("uRad").addEventListener("click", () => setUnit("rad"));
+
+$("playBtn").addEventListener("click", () => {
+  running = !running;
+  $("playBtn").textContent = running ? "⏸ Pause" : "▶ Weiter";
+});
+$("resetBtn").addEventListener("click", () => {
+  t = 0;
+  if (!running) { running = true; $("playBtn").textContent = "⏸ Pause"; }
+});
+
+document.querySelectorAll(".presets button").forEach(b => {
+  b.addEventListener("click", () => {
+    setUnit("cycles");
+    $("freq").value = b.dataset.f; $("freqSlider").value = Math.min(b.dataset.f, 100);
+    $("phase").value = b.dataset.c; $("phaseSlider").value = b.dataset.c;
+    t = 0; updateStatic();
+  });
+});
+
+updateStatic();
+if (reduced) { running = false; $("playBtn").textContent = "▶ Weiter"; }
+rafId = requestAnimationFrame(frame);
+</script>
+</body>
+</html>

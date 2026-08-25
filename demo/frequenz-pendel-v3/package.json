@@ -1,0 +1,19 @@
+{
+  "name": "frequenz-pendel-v3",
+  "version": "3.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "serve": "node devserver.js",
+    "build": "node build.js",
+    "fetch-legacy": "node fetch-legacy.js",
+    "render-reference": "node render-reference.js",
+    "test": "node --test tests/",
+    "test:ui": "playwright test tests/ui.spec.js"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.62.1",
+    "axe-core": "4.10.0",
+    "@axe-core/playwright": "4.10.0"
+  }
+}

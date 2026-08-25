@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frequenz-Pendel v3</title>
+<style>
+:root{--bg1:#1f283e;--bg2:#0c111c;--panel:#1a202c;--card:#2c3444;
+--accent:#4ecdc4;--accent2:#45b7d1;--warn:#ffb86b;--text:#e0e6ed;
+--muted:#b8c4d4;--border:rgba(78,205,196,.25)}
+*{box-sizing:border-box}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+background:linear-gradient(135deg,var(--bg1),var(--bg2));color:var(--text);
+margin:0;padding:16px;min-height:100vh}
+.container{max-width:1100px;margin:0 auto;background:var(--panel);
+border:1px solid var(--border);border-radius:16px;padding:24px}
+h1{color:var(--accent);font-size:1.6em;margin:0 0 4px;text-align:center}
+.subtitle{color:var(--muted);text-align:center;margin:0 0 14px;font-size:.95em}
+.arc-steps{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.arc-steps span{background:var(--card);border:1px solid var(--border);
+border-radius:20px;padding:6px 14px;font-size:.85em;color:var(--accent)}
+.arc-steps .ar{background:none;border:none;color:var(--muted)}
+.grid{display:grid;grid-template-columns:300px 1fr;gap:20px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+.panel{background:var(--card);border-radius:12px;padding:18px;border:1px solid var(--border)}
+label{display:block;color:var(--muted);font-size:.85em;margin-bottom:4px}
+.ctl{margin-bottom:16px}
+input[type=range]{width:100%;accent-color:var(--accent)}
+input[type=number]{width:100%;padding:8px;background:#3e485e;border:1px solid #5a667d;
+border-radius:6px;color:var(--text);font-size:1em;min-height:44px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.rowvals{display:flex;gap:8px;align-items:center}.rowvals input[type=number]{max-width:100px}
+.rowvals input[type=range]{flex:1}
+.unit-toggle{display:flex;border:1px solid var(--border);border-radius:6px;
+overflow:hidden;margin-top:6px}
+.unit-toggle button{flex:1;padding:10px;background:#3e485e;border:none;
+color:var(--muted);cursor:pointer;min-height:44px}
+.unit-toggle button.active{background:var(--accent);color:#1a202c;font-weight:700}
+.btn{padding:10px 16px;border:none;border-radius:6px;cursor:pointer;min-height:44px}
+.btn-p{background:var(--accent);color:#1a202c;font-weight:700}
+.btn-s{background:#5a667d;color:var(--text)}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap}
+.presets{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.presets button{text-align:left;background:#232a38;border:1px solid var(--border);
+color:var(--text);padding:10px;border-radius:6px;cursor:pointer;font-size:.82em;min-height:44px}
+.err{background:rgba(255,107,107,.12);color:#ff8080;border-left:3px solid #ff6b6b;
+padding:8px 10px;border-radius:6px;font-size:.85em;display:none;margin-bottom:12px}
+.views{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:640px){.views{grid-template-columns:1fr}}
+.view{background:#232a38;border-radius:10px;padding:12px;border:1px solid rgba(255,255,255,.08)}
+.view h3{margin:0 0 8px;font-size:.85em;color:var(--muted);text-transform:uppercase}
+svg{width:100%;height:auto;display:block}
+.wide{grid-column:1/-1}
+.badge{color:var(--accent);font-weight:700;font-size:1.1em}
+.exact{color:var(--muted);font-size:.82em;margin-top:6px;font-variant-numeric:tabular-nums}
+.strobe{color:var(--warn);font-size:.78em;margin-top:6px}
+.calc{margin-top:16px;background:#232a38;border-radius:10px;padding:16px;
+border:1px solid var(--border)}
+.formulas{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:640px){.formulas{grid-template-columns:1fr}}
+.formula{background:var(--card);border-radius:8px;padding:12px;
+font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.9em}
+.formula .tag{font-size:.75em;color:var(--muted);display:block;margin-bottom:6px;
+font-family:system-ui,sans-serif}
+.formula .res{color:var(--accent);font-weight:700;font-size:1.15em;display:block;margin-top:8px}
+.stats{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;font-size:.9em}
+.stats div span{color:var(--muted);display:block;font-size:.78em}
+.stats div b{font-variant-numeric:tabular-nums}
+.note{margin-top:16px;color:var(--muted);font-size:.82em;line-height:1.5;
+border-top:1px solid rgba(255,255,255,.1);padding-top:12px}
+.pend-label{color:var(--warn);font-size:.78em;margin-top:6px;line-height:1.4}
+.egg-line{color:var(--warn);font-size:.85em;margin-top:8px}
+.ai-entry{border-bottom:1px solid rgba(255,255,255,.1);padding:8px 0;font-size:.85em}
+.ai-entry code{color:var(--accent)}
+.ai-entry .gloss{color:var(--muted);font-size:.9em}
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1 id="appTitle"></h1>
+  <p class="subtitle" id="appSubtitle"></p>
+  <div class="arc-steps">
+    <span>Frequency Pattern</span><span class="ar">→</span>
+    <span>Phase Differentiation</span><span class="ar">→</span>
+    <span>Measurable Duration</span>
+  </div>
+
+  <div class="grid">
+    <div class="panel">
+      <div id="err" class="err" role="alert"></div>
+
+      <div class="ctl">
+        <label for="freqSlider">Frequenz f (Hz) — Vertragsbereich 0.01–1000, Slider bis 100</label>
+        <div class="rowvals">
+          <input type="range" id="freqSlider" min="0.01" max="100" step="0.01" value="1"
+                 aria-label="Frequenz in Hertz">
+          <input type="number" id="freq" min="0.01" max="1000" step="0.01" value="1"
+                 aria-label="Frequenz in Hertz, Zahleneingabe">
+        </div>
+        <div id="fOut" class="strobe" hidden>Wert außerhalb des Slider-Bereichs</div>
+      </div>
+
+      <div class="ctl">
+        <label for="phaseSlider" id="phaseLabelUnit">ΔΦ_cycles (Zyklen)</label>
+        <div class="rowvals">
+          <input type="range" id="phaseSlider" min="0" max="8" step="0.01" value="1"
+                 aria-label="Phasendifferenz">
+          <input type="number" id="phase" min="0" step="0.01" value="1"
+                 aria-label="Phasendifferenz, Zahleneingabe">
+        </div>
+        <div class="unit-toggle" role="group" aria-label="Einheit der Phasendifferenz">
+          <button id="uCycles" class="active" aria-pressed="true">ΔΦ_cycles (Zyklen)</button>
+          <button id="uRad" aria-pressed="false">Δφ_rad (Radiant)</button>
+        </div>
+      </div>
+
+      <div class="btnrow">
+        <button class="btn btn-p" id="playBtn">⏸ Pause</button>
+        <button class="btn btn-s" id="resetBtn"></button>
+      </div>
+
+      <div class="ctl" style="margin-top:18px">
+        <label>Reproduzierbare Beispiele</label>
+        <div class="presets">
+          <button data-preset data-f="1" data-c="1">1 Hz · 1 Zyklus → T = 1.000 s</button>
+          <button data-preset data-f="1" data-c="0.5">1 Hz · π rad (½ Zyklus) → T = 0.500 s</button>
+          <button data-preset data-f="2" data-c="1">2 Hz · 1 Zyklus → T = 0.500 s</button>
+          <button data-preset data-f="7.83" data-c="1">Schumann-Grundmode · 7.83 Hz</button>
+          <button data-preset data-f="42" data-c="1">🐋 42 Hz</button>
+          <button data-preset data-f="7.83" data-c="23.25">Perlen-Demo: 23.25 Zyklen</button>
+        </div>
+      </div>
+
+      <button class="btn btn-s" id="aiToggle" aria-expanded="false" style="margin-top:14px"></button>
+      <div id="aiPanel" hidden></div>
+    </div>
+
+    <div>
+      <div class="views">
+        <div class="view">
+          <h3>Phasenrad <span class="badge" id="cycBadge"></span></h3>
+          <svg viewBox="0 0 220 220" role="img"
+               aria-label="Phasenrad: zwei Zeiger, Restphase als gefüllter Bogen, ganze Zyklen als Perlen und Badge">
+            <circle cx="110" cy="110" r="86" fill="none" stroke="rgba(255,255,255,.15)" stroke-width="2"/>
+            <path id="phaseArc" fill="rgba(78,205,196,.25)"/>
+            <g id="pearls"></g>
+            <line id="hand1" x1="110" y1="110" x2="110" y2="24" stroke="#4ecdc4" stroke-width="3" stroke-linecap="round"/>
+            <line id="hand2" x1="110" y1="110" x2="110" y2="24" stroke="#45b7d1" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="110" cy="110" r="5" fill="#e0e6ed"/>
+          </svg>
+          <div class="exact" id="exactPhase"></div>
+          <div class="strobe" id="strobe" hidden></div>
+        </div>
+
+        <div class="view">
+          <h3>Doppelpendel</h3>
+          <svg viewBox="0 0 220 190" role="img"
+               aria-label="Zwei Pendel als historische Visualisierungsmetapher, keine physikalische Simulation">
+            <circle cx="75" cy="25" r="3" fill="#4ecdc4"/>
+            <circle cx="145" cy="25" r="3" fill="#45b7d1"/>
+            <line x1="75" y1="25" x2="145" y2="25" stroke="rgba(255,255,255,.2)"
+                  stroke-width="1.5" stroke-dasharray="4,4"/>
+            <g id="pend1"><line x1="75" y1="25" x2="75" y2="150" stroke="#4ecdc4" stroke-width="2.5"/>
+              <circle cx="75" cy="150" r="11" fill="#4ecdc4"/></g>
+            <g id="pend2"><line x1="145" y1="25" x2="145" y2="150" stroke="#45b7d1" stroke-width="2.5"/>
+              <circle cx="145" cy="150" r="11" fill="#45b7d1"/></g>
+          </svg>
+          <p class="pend-label" id="pendLabel"></p>
+        </div>
+
+        <div class="view wide">
+          <h3>Wellenform — Fenster: 2 Zyklen</h3>
+          <svg viewBox="0 0 600 140" role="img"
+               aria-label="Zwei Sinuswellen mit Phasenverschiebung, Zeitcursor und markiertem Zeitintervall T">
+            <text id="whale" x="300" y="90" font-size="60" text-anchor="middle"
+                  style="opacity:0;transition:opacity .5s">🐋</text>
+            <line x1="0" y1="70" x2="600" y2="70" stroke="rgba(255,255,255,.12)"/>
+            <path id="wave1" fill="none" stroke="#4ecdc4" stroke-width="2"/>
+            <path id="wave2" fill="none" stroke="#45b7d1" stroke-width="2"/>
+            <line id="tm1" y1="10" y2="130" stroke="#ffb86b" stroke-width="1.5" stroke-dasharray="3,3"/>
+            <line id="tm2" y1="10" y2="130" stroke="#ffb86b" stroke-width="1.5" stroke-dasharray="3,3"/>
+            <line id="waveCursor" y1="10" y2="130" stroke="#e0e6ed" stroke-width="1" opacity=".6"/>
+            <text id="tLabel" y="22" fill="#ffb86b" font-size="11" text-anchor="middle"></text>
+          </svg>
+          <div class="egg-line" id="egg" hidden></div>
+        </div>
+      </div>
+
+      <div class="calc">
+        <div class="formulas">
+          <div class="formula">
+            <span class="tag">Konvention v9.0 — Phase in Zyklen (ΔΦ_cycles)</span>
+            T = ΔΦ_cycles / f<br>
+            <span id="calc1" style="color:var(--muted)"></span>
+            <span class="res" id="res1"></span>
+          </div>
+          <div class="formula">
+            <span class="tag">Äquivalent — Phase in Radiant (Δφ_rad)</span>
+            T = Δφ_rad / (2π·f)<br>
+            <span id="calc2" style="color:var(--muted)"></span>
+            <span class="res" id="res2"></span>
+          </div>
+        </div>
+        <div class="stats">
+          <div><span>Laufzeit t</span><b id="tRun">0.00 s</b></div>
+          <div><span>Ganze Zyklen</span><b id="cycFull">0</b></div>
+          <div><span>Angebrochener Zyklus</span><b id="cycPart">0.00</b></div>
+        </div>
+        <div id="liveResult" aria-live="polite" class="visually-hidden"></div>
+      </div>
+
+      <p class="note" id="evidence"></p>
+    </div>
+  </div>
+</div>
+
+<script type="application/json" id="catalog"></script>
+<script type="application/json" id="content"></script>
+<script type="module" src="src/ui.js"></script>
+</body>
+</html>
