@@ -34,3 +34,24 @@ Das Release selbst führt **null** Netzwerkzugriffe aus (Playwright-verifiziert)
 
 ## Befehlsfolge
 
+Node.js 22 oder 24 verwenden. Im Ordner `demo/frequenz-pendel-v3`:
+
+```bash
+npm ci
+npx playwright install chromium
+npm run build
+npm test
+npm run test:ui
+```
+
+`npm run serve` startet die Entwicklungsansicht unter `http://localhost:8080`.
+Für das Offline-Release die Datei `release/index.html` herunterladen und lokal
+öffnen; GitHubs Dateiansicht führt HTML nicht als Demo aus.
+
+Die Originaldatei wurde anhand der oben genannten Quelle wiederhergestellt:
+Im bisherigen Git-Artefakt fehlte eine DOI-Linkzeile. Die gebundenen Prüfsummen
+wurden dabei nicht verändert. `.gitattributes` schützt die Legacy-HTML-Bytes
+vor Zeilenendenkonvertierung. Beim v2-Artefakt wurde die gebundene CRLF-Byteform
+wiederhergestellt; der Textinhalt bleibt unverändert.
+
+[Projektübersicht](../../README.md) · [Analysestandard](../../docs/ANALYTICAL_SCOPE.md)

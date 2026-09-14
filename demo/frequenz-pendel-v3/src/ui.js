@@ -64,6 +64,7 @@ export async function boot() {
 
     renderWheelStatic(els.wheel, phiCycles);
     renderWaveStatic(els.wave, f, phiCycles);
+    renderCurrentFrame();
 
     // 42-Hz Easter Egg (V3: playful_metaphor)
     const egg = f === 42;
@@ -75,13 +76,8 @@ export async function boot() {
     $("liveResult").textContent = `T = ${fmt(T)} s`; // aria-live, nur bei Änderung
   }
 
-  function frame(ts) {
-    window.__fp_frames++;
-    if (lastTs === null) lastTs = ts;
-    const dt = Math.min((ts - lastTs) / 1000, 0.1);
-    lastTs = ts;
+  function renderCurrentFrame() {
     const { f, phiCycles } = store.get();
-    clock.advance(f, dt);
     const s = strobeFactor(f);
     const visCycles = clock.totalCycles / s;
     const visAngle = TAU * (visCycles % 1);
@@ -91,6 +87,15 @@ export async function boot() {
     $("tRun").textContent = fmt(clock.seconds, 2) + " s";
     $("cycFull").textContent = String(clock.cycles);
     $("cycPart").textContent = fmt(clock.frac, 2);
+  }
+
+  function frame(ts) {
+    window.__fp_frames++;
+    if (lastTs === null) lastTs = ts;
+    const dt = Math.min((ts - lastTs) / 1000, 0.1);
+    lastTs = ts;
+    clock.advance(store.get().f, dt);
+    renderCurrentFrame();
     rafId = requestAnimationFrame(frame);
   }
 
@@ -114,15 +119,24 @@ export async function boot() {
     $(sliderId).addEventListener("input", () => {
       store.set({ [key]: toModel(parseFloat($(sliderId).value)) });
       $(numId).value = fromModel(store.get()[key]);
+      $(numId).removeAttribute("aria-invalid");
       updateStatic();
     });
     $(numId).addEventListener("input", () => {
       const v = parseFloat($(numId).value);
-      if (Number.isFinite(v)) {
-        store.set({ [key]: toModel(v) });
-        const sl = $(sliderId);
-        sl.value = Math.min(Math.max(v, parseFloat(sl.min)), parseFloat(sl.max));
+      const modelValue = toModel(v);
+      const error = key === "f" ? validateFrequency(modelValue) : validatePhaseCycles(modelValue);
+      if (error) {
+        $("err").textContent = "⚠ " + error;
+        $("err").style.display = "block";
+        $(numId).setAttribute("aria-invalid", "true");
+        pause();
+        return;
       }
+      $(numId).removeAttribute("aria-invalid");
+      store.set({ [key]: modelValue });
+      const sl = $(sliderId);
+      sl.value = Math.min(Math.max(v, parseFloat(sl.min)), parseFloat(sl.max));
       updateStatic();
     });
   }

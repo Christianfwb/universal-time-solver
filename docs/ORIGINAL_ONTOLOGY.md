@@ -1,3 +1,7 @@
+> Historical material. Original terminology and embedded references are retained.
+> See the [archive reference map](ARCHIVE_REFERENCES.md) and [current overview](../README.md).
+> Navigation repairs and a closing code fence have been added; this is not a byte-identical archival copy.
+
 # 🌌 ONTOLOGY: The Frequenzgesetz Explained
 
 This document provides a detailed overview of the Frequenzgesetz's core ontology, exploring the causal chain and foundational principles that underpin the "universal-time-solver" protocol. It serves to answer the "why" behind the physical phenomena, as requested in AI feedback.
@@ -32,3 +36,4 @@ graph LR
     Phase --> Zeit
     Phase --> Masse
     Phase --> Resonanz
+```

@@ -1,5 +1,22 @@
 # Layered Emergence Model
 
+## Public release and analytical scope
+
+This repository contains the publicly released material on the Frequenzgesetz:
+its ontological presentation, mathematical relations and executable examples.
+
+An internal analysis uses the ontology's own definitions, axioms and intended
+categories. Silently replacing them with assumptions from another framework and
+calling the result an internal refutation is a category error. Internal analysis
+can still identify contradictions, undefined terms or invalid deductions within
+the stated framework.
+
+External comparisons are explicitly identified as external comparisons. Empirical
+assessment concerns observable predictions and reproducible results. These are
+different questions from internal coherence; neither is answered by silently
+switching between the two. Reproducing a known equation verifies that calculation,
+not a new causal interpretation by itself.
+
 This document presents the public ontological structure of Christian Berrang's Frequenzgesetz. It is a conceptual model for discussing how timeless potential, periodic structure and measurable physical duration might relate.
 
 > **Status:** The layer sequence is an exploratory ontology. The phase-to-time relation is operational mathematics. The mathematical relation does not by itself prove the causal interpretation.

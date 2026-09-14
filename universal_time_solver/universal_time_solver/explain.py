@@ -82,7 +82,7 @@ def explain_references() -> dict:
             "Mass-energy equivalence E = mc²",
             "CODATA constants",
         ],
-        "note": "See PROOF.md for the evidence boundary.",
+        "note": "See PROOF.md for analytical scope and docs/CONCEPTS.md for source links.",
     }
 
 

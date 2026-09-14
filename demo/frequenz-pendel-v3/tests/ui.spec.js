@@ -109,3 +109,35 @@ test("A11y: axe-core ohne critical/serious-Verstöße", async ({ page }) => {
   const bad = results.violations.filter(v => ["critical", "serious"].includes(v.impact));
   expect(bad).toEqual([]);
 });
+
+test("Ungültige und leere Eingaben stoppen ohne die Uhr zu beschädigen", async ({ page }) => {
+  await page.goto(RELEASE);
+  await page.fill("#freq", "-5");
+  await expect(page.locator("#freq")).toHaveAttribute("aria-invalid", "true");
+  const count = await page.locator("#cycFull").textContent();
+  await page.waitForTimeout(100);
+  await expect(page.locator("#cycFull")).toHaveText(count);
+  expect(Number(await page.locator("#cycPart").textContent())).toBeGreaterThanOrEqual(0);
+  await page.fill("#freq", "");
+  await expect(page.locator("#err")).toBeVisible();
+  await page.fill("#freq", "1");
+  await expect(page.locator("#err")).not.toBeVisible();
+  await page.click("#playBtn");
+  await page.waitForTimeout(100);
+  expect(Number(await page.locator("#cycPart").textContent())).toBeGreaterThanOrEqual(0);
+});
+
+test("Pause: Reset und Phasenänderung aktualisieren Grafik und Zähler", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto(RELEASE);
+  const before = await page.locator("#hand2").getAttribute("x2");
+  await page.fill("#phase", "0.25");
+  expect(await page.locator("#hand2").getAttribute("x2")).not.toBe(before);
+  await page.click("#playBtn");
+  await page.waitForTimeout(150);
+  await page.click("#playBtn");
+  await page.click("#resetBtn");
+  await expect(page.locator("#tRun")).toHaveText("0.00 s");
+  await expect(page.locator("#cycFull")).toHaveText("0");
+  await expect(page.locator("#cycPart")).toHaveText("0.00");
+});

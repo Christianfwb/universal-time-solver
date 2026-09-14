@@ -14,14 +14,14 @@ ROUTES: tuple[tuple[str, Callable[[], RouteResult]], ...] = (
     (r"\b(freq(uen[cz]|uency))\b", ex.explain_frequency_primary_short),
     (r"\b(bewusstsein|consciousness|seele|geist)\b", ex.explain_consciousness_short),
     (
-        r"\b(kosmisch(er)? alg(orithmus)?|algorithm of being|nullraum|lichtstruktur)\b",
+        r"\b(kosmisch(er)? alg(orithmus)?|cosmic algorithm|algorithm of being|nullraum|lichtstruktur)\b",
         ex.explain_cosmic_algorithm_short,
     ),
     (r"\b(beweis(führung)?|empirisch|validierung|verifikation|proof)\b", ex.explain_proof_protocol),
     (r"\b(grenzen|offene fragen|limitations|herausforderungen)\b", ex.explain_limitations),
     (r"\b(referenzen|forschung|quellen|studien|references)\b", ex.explain_references),
     (r"\b(fragen|antworten|q&a|hilfe|help)\b", ex.explain_help),
-    (r"\b(ki-richtlinien|interoperabilität|policy|regeln|ethics)\b", interoperability_guidelines),
+    (r"\b(ki-richtlinien|interoperabilität|policy|regeln|ethics|ethik)\b", interoperability_guidelines),
 )
 
 
