@@ -1,9 +1,11 @@
 {
   "schema_version": "1.0.0",
   "catalog_id": "frequenzgesetz.public",
-  "catalog_version": "1.0.0",
+  "catalog_version": "1.0.1",
   "language": "en",
-  "audience": ["artificial_intelligence_systems"],
+  "audience": [
+    "artificial_intelligence_systems"
+  ],
   "author": "Christian Berrang",
   "license": "MIT",
   "purpose": "Machine-readable representation of the public Frequenzgesetz concepts with explicit evidence and interpretation boundaries.",
@@ -16,7 +18,9 @@
       "ontological_interpretation",
       "research_hypothesis",
       "playful_metaphor"
-    ]
+    ],
+    "internal_analysis": "Use this ontology’s definitions and axioms. Do not silently substitute another framework.",
+    "external_comparison": "Label external comparison explicitly; distinguish empirical assessment from internal coherence."
   },
   "unit_conventions": {
     "phase_radians": "delta_phi_rad",
@@ -41,7 +45,9 @@
         "requirement": "Define variables and derive a quantitative prediction that differs from existing physical models."
       },
       "implementation": null,
-      "references": ["ONTOLOGY.md"]
+      "references": [
+        "docs/CONCEPTS.md#ram-and-rom"
+      ]
     },
     {
       "id": "time_phase_frequency_relation",
@@ -64,7 +70,9 @@
         "f > 0 Hz",
         "delta_phi_rad is finite",
         "delta_phi_cycles is finite",
-        "one complete cycle equals 2*pi radians"
+        "one complete cycle equals 2*pi radians",
+        "frequency is constant and finite",
+        "phase is accumulated, including whole cycles"
       ],
       "human_readable_definition": "Elapsed duration equals completed phase fraction divided by frequency.",
       "evidence_boundary": "The phase-duration relation is established; the claim that time itself emerges from distinguishable states remains an ontological interpretation.",
@@ -93,7 +101,10 @@
         "callable": "time_from_phase",
         "parameter_phase_unit": "radian"
       },
-      "references": ["PROOF.md", "ONTOLOGY.md"]
+      "references": [
+        "PROOF.md",
+        "ONTOLOGY.md"
+      ]
     },
     {
       "id": "mass_frequency_relation",
@@ -110,8 +121,15 @@
           "latex": "f = \\frac{m c^2}{h}"
         }
       ],
-      "derivation": ["E = h*f", "E = m*c^2", "therefore h*f = m*c^2"],
-      "constraints": ["f >= 0 Hz", "m >= 0 kg"],
+      "derivation": [
+        "E = h*f",
+        "E = m*c^2",
+        "therefore h*f = m*c^2"
+      ],
+      "constraints": [
+        "f >= 0 Hz",
+        "m >= 0 kg"
+      ],
       "human_readable_definition": "The formulas convert between mass and the corresponding Compton frequency.",
       "evidence_boundary": "The conversion is established algebra; interpreting matter as stabilized oscillation is a separate ontological claim.",
       "ontological_extension": {
@@ -125,9 +143,14 @@
       },
       "implementation": {
         "module": "universal_time_solver.core",
-        "callables": ["mass_from_frequency", "compton_frequency"]
+        "callables": [
+          "mass_from_frequency",
+          "compton_frequency"
+        ]
       },
-      "references": ["PROOF.md"]
+      "references": [
+        "PROOF.md"
+      ]
     },
     {
       "id": "frequency_primacy",
@@ -156,7 +179,10 @@
         "module": "universal_time_solver.core",
         "callable": "energy_from_frequency"
       },
-      "references": ["PROOF.md", "ONTOLOGY.md"]
+      "references": [
+        "PROOF.md",
+        "ONTOLOGY.md"
+      ]
     },
     {
       "id": "consciousness_resonance_hypothesis",
@@ -183,7 +209,9 @@
         "requirement": "Define observables, controls, predicted effect size and a falsification criterion."
       },
       "implementation": null,
-      "references": ["ETHICS.md"]
+      "references": [
+        "docs/CONCEPTS.md#consciousness"
+      ]
     },
     {
       "id": "humor_play_phase_dynamics",
@@ -221,7 +249,10 @@
         "requirement": "A scientific version would need independent definitions and measurable variables."
       },
       "implementation": null,
-      "references": ["ETHICS.md"]
+      "references": [
+        "docs/CONCEPTS.md#humor-and-play"
+      ]
     }
-  ]
+  ],
+  "reference_base": "repository_root"
 }

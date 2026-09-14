@@ -205,3 +205,8 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Demo dependencies and test output
+node_modules/
+test-results/
+playwright-report/

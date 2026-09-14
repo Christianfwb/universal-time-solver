@@ -16,7 +16,7 @@ from .triggers import route
 
 
 def _emit(value: object) -> None:
-    print(json.dumps(value, ensure_ascii=False, indent=2))
+    print(json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False))
 
 
 def main() -> int:

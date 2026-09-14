@@ -22,4 +22,47 @@ jobs:
       - run: python -m pip install --upgrade pip
       - run: python -m pip install -e ".[api,test]"
       - run: python -m pytest
+      - run: python -m ruff check .
       - run: python -m universal_time_solver --version
+
+  distribution:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install build
+      - run: python -m build
+      - name: Check installed wheel outside checkout
+        run: |
+          python -m venv /tmp/wheel-check
+          /tmp/wheel-check/bin/pip install dist/*.whl
+          cd /tmp
+          /tmp/wheel-check/bin/universal-time-solver --time-from-phi 6.283185307179586 1
+      - name: Test source archive and execute notebook
+        run: |
+          mkdir /tmp/source-check
+          tar -xzf dist/*.tar.gz -C /tmp/source-check
+          cd /tmp/source-check/*
+          python -m pip install ".[api,test,notebook]"
+          python -m pytest
+          python -c "import nbformat; from nbclient import NotebookClient; nb = nbformat.read('examples/Time_Ontology_Comparison.ipynb', as_version=4); NotebookClient(nb, timeout=120).execute()"
+
+  demo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: demo/frequenz-pendel-v3/package-lock.json
+      - working-directory: demo/frequenz-pendel-v3
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+          npm run build
+          git diff --exit-code -- release/index.html
+          npm test
+          npm run test:ui

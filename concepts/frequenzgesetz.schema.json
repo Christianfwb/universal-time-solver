@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Public Frequenzgesetz catalog",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "catalog_version",
+    "reference_base",
+    "concepts",
+    "interpretation_policy"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "reference_base": {
+      "const": "repository_root"
+    },
+    "concepts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "version",
+          "title",
+          "status",
+          "evidence_boundary",
+          "testability",
+          "references",
+          "implementation"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "status": {
+            "enum": [
+              "established_relation",
+              "ontological_interpretation",
+              "research_hypothesis",
+              "playful_metaphor"
+            ]
+          },
+          "evidence_boundary": {
+            "type": "string",
+            "minLength": 1
+          },
+          "references": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "testability": {
+            "type": "object",
+            "required": [
+              "currently_operationalized"
+            ],
+            "properties": {
+              "currently_operationalized": {
+                "type": "boolean"
+              }
+            }
+          },
+          "ontological_extension": {
+            "type": "object",
+            "required": [
+              "status",
+              "statement",
+              "evidence_boundary"
+            ],
+            "properties": {
+              "status": {
+                "enum": [
+                  "established_relation",
+                  "ontological_interpretation",
+                  "research_hypothesis",
+                  "playful_metaphor"
+                ]
+              }
+            }
+          },
+          "joke": {
+            "type": "object",
+            "required": [
+              "status",
+              "empirical_measurement",
+              "interpret_literally"
+            ],
+            "properties": {
+              "status": {
+                "const": "playful_metaphor"
+              },
+              "empirical_measurement": {
+                "const": false
+              },
+              "interpret_literally": {
+                "const": false
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

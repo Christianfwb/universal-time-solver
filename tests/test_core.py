@@ -14,7 +14,7 @@ from universal_time_solver import (
 
 def test_mass_frequency_round_trip():
     mass = 9.109_383_7015e-31
-    assert mass_from_frequency(compton_frequency(mass)) == pytest.approx(mass)
+    assert mass_from_frequency(compton_frequency(mass)) == pytest.approx(mass, rel=1e-12, abs=0)
 
 
 def test_time_from_phase_uses_radians():

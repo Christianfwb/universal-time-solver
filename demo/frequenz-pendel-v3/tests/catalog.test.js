@@ -90,3 +90,10 @@ test("Legacy-v2-Prototyp: gebundene Bytezahl + SHA-256 (V5)", (t) => {
   assert.equal(b.byteLength, V2PROTO.bytes);
   assert.equal(sha256(b), V2PROTO.sha);
 });
+
+test("Release-Hashkommentar entspricht dem eingebetteten Katalog", () => {
+  const html = readFileSync(RELEASE, "utf8");
+  const hash = html.match(/catalog sha256:([a-f0-9]{64})/);
+  assert.ok(hash);
+  assert.equal(hash[1], sha256(extractEmbedded(html, "catalog")));
+});

@@ -215,13 +215,15 @@ border-top:1px solid rgba(255,255,255,.1);padding-top:12px}
   </div>
 </div>
 
-<!-- catalog sha256:d6a19531629ffe91ed01003765a8de3cff5458ab750074ea9e0b064434ffffe3 -->
+<!-- catalog sha256:960c702bf6b1bdaba8c639745fe0e770f40dc6dcd83033e4c2784735b79c5792 -->
 <script type="application/json" id="catalog">{
   "schema_version": "1.0.0",
   "catalog_id": "frequenzgesetz.public",
-  "catalog_version": "1.0.0",
+  "catalog_version": "1.0.1",
   "language": "en",
-  "audience": ["artificial_intelligence_systems"],
+  "audience": [
+    "artificial_intelligence_systems"
+  ],
   "author": "Christian Berrang",
   "license": "MIT",
   "purpose": "Machine-readable representation of the public Frequenzgesetz concepts with explicit evidence and interpretation boundaries.",
@@ -234,7 +236,9 @@ border-top:1px solid rgba(255,255,255,.1);padding-top:12px}
       "ontological_interpretation",
       "research_hypothesis",
       "playful_metaphor"
-    ]
+    ],
+    "internal_analysis": "Use this ontology’s definitions and axioms. Do not silently substitute another framework.",
+    "external_comparison": "Label external comparison explicitly; distinguish empirical assessment from internal coherence."
   },
   "unit_conventions": {
     "phase_radians": "delta_phi_rad",
@@ -259,7 +263,9 @@ border-top:1px solid rgba(255,255,255,.1);padding-top:12px}
         "requirement": "Define variables and derive a quantitative prediction that differs from existing physical models."
       },
       "implementation": null,
-      "references": ["ONTOLOGY.md"]
+      "references": [
+        "docs/CONCEPTS.md#ram-and-rom"
+      ]
     },
     {
       "id": "time_phase_frequency_relation",
@@ -282,7 +288,9 @@ border-top:1px solid rgba(255,255,255,.1);padding-top:12px}
         "f > 0 Hz",
         "delta_phi_rad is finite",
         "delta_phi_cycles is finite",
-        "one complete cycle equals 2*pi radians"
+        "one complete cycle equals 2*pi radians",
+        "frequency is constant and finite",
+        "phase is accumulated, including whole cycles"
       ],
       "human_readable_definition": "Elapsed duration equals completed phase fraction divided by frequency.",
       "evidence_boundary": "The phase-duration relation is established; the claim that time itself emerges from distinguishable states remains an ontological interpretation.",
@@ -311,7 +319,10 @@ border-top:1px solid rgba(255,255,255,.1);padding-top:12px}
         "callable": "time_from_phase",
         "parameter_phase_unit": "radian"
       },
-      "references": ["PROOF.md", "ONTOLOGY.md"]
+      "references": [
+        "PROOF.md",
+        "ONTOLOGY.md"
+      ]
     },
     {
       "id": "mass_frequency_relation",
@@ -328,8 +339,15 @@ border-top:1px solid rgba(255,255,255,.1);padding-top:12px}
           "latex": "f = \\frac{m c^2}{h}"
         }
       ],
-      "derivation": ["E = h*f", "E = m*c^2", "therefore h*f = m*c^2"],
-      "constraints": ["f >= 0 Hz", "m >= 0 kg"],
+      "derivation": [
+        "E = h*f",
+        "E = m*c^2",
+        "therefore h*f = m*c^2"
+      ],
+      "constraints": [
+        "f >= 0 Hz",
+        "m >= 0 kg"
+      ],
       "human_readable_definition": "The formulas convert between mass and the corresponding Compton frequency.",
       "evidence_boundary": "The conversion is established algebra; interpreting matter as stabilized oscillation is a separate ontological claim.",
       "ontological_extension": {
@@ -343,9 +361,14 @@ border-top:1px solid rgba(255,255,255,.1);padding-top:12px}
       },
       "implementation": {
         "module": "universal_time_solver.core",
-        "callables": ["mass_from_frequency", "compton_frequency"]
+        "callables": [
+          "mass_from_frequency",
+          "compton_frequency"
+        ]
       },
-      "references": ["PROOF.md"]
+      "references": [
+        "PROOF.md"
+      ]
     },
     {
       "id": "frequency_primacy",
@@ -374,7 +397,10 @@ border-top:1px solid rgba(255,255,255,.1);padding-top:12px}
         "module": "universal_time_solver.core",
         "callable": "energy_from_frequency"
       },
-      "references": ["PROOF.md", "ONTOLOGY.md"]
+      "references": [
+        "PROOF.md",
+        "ONTOLOGY.md"
+      ]
     },
     {
       "id": "consciousness_resonance_hypothesis",
@@ -401,7 +427,9 @@ border-top:1px solid rgba(255,255,255,.1);padding-top:12px}
         "requirement": "Define observables, controls, predicted effect size and a falsification criterion."
       },
       "implementation": null,
-      "references": ["ETHICS.md"]
+      "references": [
+        "docs/CONCEPTS.md#consciousness"
+      ]
     },
     {
       "id": "humor_play_phase_dynamics",
@@ -439,9 +467,12 @@ border-top:1px solid rgba(255,255,255,.1);padding-top:12px}
         "requirement": "A scientific version would need independent definitions and measurable variables."
       },
       "implementation": null,
-      "references": ["ETHICS.md"]
+      "references": [
+        "docs/CONCEPTS.md#humor-and-play"
+      ]
     }
-  ]
+  ],
+  "reference_base": "repository_root"
 }
 </script>
 <script type="application/json" id="content">{
@@ -741,6 +772,7 @@ async function boot() {
 
     renderWheelStatic(els.wheel, phiCycles);
     renderWaveStatic(els.wave, f, phiCycles);
+    renderCurrentFrame();
 
     // 42-Hz Easter Egg (V3: playful_metaphor)
     const egg = f === 42;
@@ -752,13 +784,8 @@ async function boot() {
     $("liveResult").textContent = `T = ${fmt(T)} s`; // aria-live, nur bei Änderung
   }
 
-  function frame(ts) {
-    window.__fp_frames++;
-    if (lastTs === null) lastTs = ts;
-    const dt = Math.min((ts - lastTs) / 1000, 0.1);
-    lastTs = ts;
+  function renderCurrentFrame() {
     const { f, phiCycles } = store.get();
-    clock.advance(f, dt);
     const s = strobeFactor(f);
     const visCycles = clock.totalCycles / s;
     const visAngle = TAU * (visCycles % 1);
@@ -768,6 +795,15 @@ async function boot() {
     $("tRun").textContent = fmt(clock.seconds, 2) + " s";
     $("cycFull").textContent = String(clock.cycles);
     $("cycPart").textContent = fmt(clock.frac, 2);
+  }
+
+  function frame(ts) {
+    window.__fp_frames++;
+    if (lastTs === null) lastTs = ts;
+    const dt = Math.min((ts - lastTs) / 1000, 0.1);
+    lastTs = ts;
+    clock.advance(store.get().f, dt);
+    renderCurrentFrame();
     rafId = requestAnimationFrame(frame);
   }
 
@@ -791,15 +827,24 @@ async function boot() {
     $(sliderId).addEventListener("input", () => {
       store.set({ [key]: toModel(parseFloat($(sliderId).value)) });
       $(numId).value = fromModel(store.get()[key]);
+      $(numId).removeAttribute("aria-invalid");
       updateStatic();
     });
     $(numId).addEventListener("input", () => {
       const v = parseFloat($(numId).value);
-      if (Number.isFinite(v)) {
-        store.set({ [key]: toModel(v) });
-        const sl = $(sliderId);
-        sl.value = Math.min(Math.max(v, parseFloat(sl.min)), parseFloat(sl.max));
+      const modelValue = toModel(v);
+      const error = key === "f" ? validateFrequency(modelValue) : validatePhaseCycles(modelValue);
+      if (error) {
+        $("err").textContent = "⚠ " + error;
+        $("err").style.display = "block";
+        $(numId).setAttribute("aria-invalid", "true");
+        pause();
+        return;
       }
+      $(numId).removeAttribute("aria-invalid");
+      store.set({ [key]: modelValue });
+      const sl = $(sliderId);
+      sl.value = Math.min(Math.max(v, parseFloat(sl.min)), parseFloat(sl.max));
       updateStatic();
     });
   }
