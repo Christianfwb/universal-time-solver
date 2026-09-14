@@ -2,12 +2,12 @@
 
 [![CI](https://github.com/Christianfwb/universal-time-solver/actions/workflows/ci.yml/badge.svg)](https://github.com/Christianfwb/universal-time-solver/actions/workflows/ci.yml)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-3776AB.svg)](https://www.python.org/)
-[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Status: alpha](https://img.shields.io/badge/status-alpha-orange.svg)](#project-status)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/Christianfwb/universal-time-solver/blob/main/LICENSE)
+[![Status: alpha](https://img.shields.io/badge/status-alpha-orange.svg)](https://github.com/Christianfwb/universal-time-solver#project-status)
 
 A compact Python toolkit for time, frequency, mass and photon-energy relations, paired with Christian Berrang's exploratory **Frequenzgesetz** ontology.
 
-> **Core distinction:** the numerical package implements established physical relations. Frequency primacy, the cosmic sequence and consciousness model are exploratory interpretations. See [Proof and evidence boundary](PROOF.md).
+> **Core distinction:** the numerical package implements established physical relations. Frequency primacy, the cosmic sequence and consciousness model are exploratory interpretations. See [Proof and evidence boundary](https://github.com/Christianfwb/universal-time-solver/blob/main/PROOF.md).
 
 ## Quick start
 
@@ -60,14 +60,14 @@ This is an **alpha research and communication project**. The software calculatio
 
 ## Project map
 
-- [ONTOLOGY.md](ONTOLOGY.md) — original conceptual framework
-- [ETHICS.md](ETHICS.md) and [ÄTHERKEKSE.md](ÄTHERKEKSE.md) — ethical and poetic layer
-- [PROOF.md](PROOF.md) — validation rules and evidence boundary
-- [AI concept catalog](concepts/frequenzgesetz.public.v1.json) — public machine-readable concept model
-- [examples/Time_Ontology_Comparison.ipynb](examples/Time_Ontology_Comparison.ipynb) — notebook
-- [CONTRIBUTING.md](CONTRIBUTING.md) — contribution guide
-- [CHANGELOG.md](CHANGELOG.md) — release history
-- [Original README 0.4.1](docs/ORIGINAL_README_0.4.1.md) — the complete pre-modernization presentation, preserved verbatim
+- [ONTOLOGY.md](https://github.com/Christianfwb/universal-time-solver/blob/main/ONTOLOGY.md) — original conceptual framework
+- [ETHICS.md](https://github.com/Christianfwb/universal-time-solver/blob/main/ETHICS.md) — ethical and poetic layer
+- [PROOF.md](https://github.com/Christianfwb/universal-time-solver/blob/main/PROOF.md) — validation rules and evidence boundary
+- [AI concept catalog](https://github.com/Christianfwb/universal-time-solver/blob/main/concepts/frequenzgesetz.public.v1.json) — public machine-readable concept model
+- [examples/Time_Ontology_Comparison.ipynb](https://github.com/Christianfwb/universal-time-solver/blob/main/examples/Time_Ontology_Comparison.ipynb) — notebook
+- [CONTRIBUTING.md](https://github.com/Christianfwb/universal-time-solver/blob/main/CONTRIBUTING.md) — contribution guide
+- [CHANGELOG.md](https://github.com/Christianfwb/universal-time-solver/blob/main/CHANGELOG.md) — release history
+- [Original README 0.4.1](https://github.com/Christianfwb/universal-time-solver/blob/main/docs/ORIGINAL_README_0.4.1.md) — the complete pre-modernization presentation, preserved verbatim
 
 ## Development
 
@@ -78,4 +78,4 @@ python -m pytest
 
 ## Author and license
 
-Created by **Christian Berrang**. Released under the [MIT License](LICENSE).
+Created by **Christian Berrang**. Released under the [MIT License](https://github.com/Christianfwb/universal-time-solver/blob/main/LICENSE).
