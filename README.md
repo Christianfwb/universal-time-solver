@@ -65,6 +65,7 @@ This is an **alpha research and communication project**. The software calculatio
 - [ETHICS.md](https://github.com/Christianfwb/universal-time-solver/blob/main/ETHICS.md) — ethical and poetic layer
 - [PROOF.md](https://github.com/Christianfwb/universal-time-solver/blob/main/PROOF.md) — validation rules and evidence boundary
 - [AI concept catalog](https://github.com/Christianfwb/universal-time-solver/blob/main/concepts/frequenzgesetz.public.v1.json) — public machine-readable concept model
+- [Concept catalog JSON Schema](concepts/schema.json) — automated structural validation of evidence labels, testability metadata and formula fields (schema compliance is not physical proof)
 - [examples/Time_Ontology_Comparison.ipynb](https://github.com/Christianfwb/universal-time-solver/blob/main/examples/Time_Ontology_Comparison.ipynb) — notebook
 - [CONTRIBUTING.md](https://github.com/Christianfwb/universal-time-solver/blob/main/CONTRIBUTING.md) — contribution guide
 - [CHANGELOG.md](https://github.com/Christianfwb/universal-time-solver/blob/main/CHANGELOG.md) — release history
@@ -76,6 +77,8 @@ This is an **alpha research and communication project**. The software calculatio
 python -m pip install -e ".[test,api]"
 python -m pytest
 ```
+
+The test suite also validates `concepts/frequenzgesetz.public.v1.json` against `concepts/schema.json` using JSON Schema Draft 2020-12. It checks required evidence boundaries and rejects misleading evidence labels; validation does **not** establish the physical hypotheses.
 
 ## Author and license
 
