@@ -1,0 +1,436 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Christianfwb/universal-time-solver/blob/main/concepts/schema.json",
+  "title": "Frequenzgesetz public concept catalog",
+  "description": "Structural validation of the public machine-readable concepts; validation is not evidence for the physical hypotheses.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "catalog_id",
+    "catalog_version",
+    "language",
+    "audience",
+    "author",
+    "license",
+    "purpose",
+    "interpretation_policy",
+    "unit_conventions",
+    "concepts"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "catalog_id": {
+      "const": "frequenzgesetz.public"
+    },
+    "catalog_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "language": {
+      "type": "string",
+      "minLength": 2
+    },
+    "audience": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "author": {
+      "type": "string",
+      "minLength": 1
+    },
+    "license": {
+      "type": "string",
+      "minLength": 1
+    },
+    "purpose": {
+      "type": "string",
+      "minLength": 1
+    },
+    "interpretation_policy": {
+      "type": "object",
+      "required": [
+        "do_not_flatten_status",
+        "do_not_treat_internal_consistency_as_empirical_proof",
+        "do_not_treat_playful_metaphor_as_measurement",
+        "status_vocabulary"
+      ],
+      "properties": {
+        "do_not_flatten_status": {
+          "const": true
+        },
+        "do_not_treat_internal_consistency_as_empirical_proof": {
+          "const": true
+        },
+        "do_not_treat_playful_metaphor_as_measurement": {
+          "const": true
+        },
+        "status_vocabulary": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 4,
+          "items": {
+            "$ref": "#/$defs/status"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "unit_conventions": {
+      "type": "object",
+      "required": [
+        "phase_radians",
+        "phase_cycles",
+        "one_cycle_in_radians",
+        "frequency",
+        "time",
+        "mass",
+        "energy"
+      ],
+      "properties": {
+        "phase_radians": {
+          "type": "string"
+        },
+        "phase_cycles": {
+          "type": "string"
+        },
+        "one_cycle_in_radians": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "frequency": {
+          "type": "string"
+        },
+        "time": {
+          "type": "string"
+        },
+        "mass": {
+          "type": "string"
+        },
+        "energy": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "concepts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/concept"
+      }
+    }
+  },
+  "$defs": {
+    "status": {
+      "enum": [
+        "established_relation",
+        "ontological_interpretation",
+        "research_hypothesis",
+        "playful_metaphor"
+      ]
+    },
+    "formula": {
+      "type": "object",
+      "required": [
+        "text",
+        "latex"
+      ],
+      "properties": {
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "latex": {
+          "type": "string",
+          "minLength": 1
+        },
+        "input_phase_unit": {
+          "enum": [
+            "radian",
+            "cycle"
+          ]
+        },
+        "relation_status": {
+          "$ref": "#/$defs/status"
+        }
+      },
+      "additionalProperties": false
+    },
+    "testability": {
+      "type": "object",
+      "required": [
+        "currently_operationalized"
+      ],
+      "properties": {
+        "currently_operationalized": {
+          "type": "boolean"
+        },
+        "requirement": {
+          "type": "string",
+          "minLength": 1
+        },
+        "method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "examples": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "minProperties": 1
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "currently_operationalized": {
+                "const": false
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "requirement"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "currently_operationalized": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "anyOf": [
+              {
+                "required": [
+                  "examples"
+                ]
+              },
+              {
+                "required": [
+                  "method"
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "ontological_extension": {
+      "type": "object",
+      "required": [
+        "status",
+        "statement",
+        "evidence_boundary"
+      ],
+      "properties": {
+        "status": {
+          "const": "ontological_interpretation"
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence_boundary": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "implementation": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "required": [
+            "module"
+          ],
+          "properties": {
+            "module": {
+              "type": "string",
+              "minLength": 1
+            },
+            "callable": {
+              "type": "string",
+              "minLength": 1
+            },
+            "callables": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "parameter_phase_unit": {
+              "enum": [
+                "radian",
+                "cycle"
+              ]
+            }
+          },
+          "anyOf": [
+            {
+              "required": [
+                "callable"
+              ]
+            },
+            {
+              "required": [
+                "callables"
+              ]
+            }
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "concept": {
+      "type": "object",
+      "required": [
+        "id",
+        "version",
+        "title",
+        "status",
+        "evidence_boundary",
+        "testability",
+        "implementation",
+        "references"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "$ref": "#/$defs/status"
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 1
+        },
+        "human_readable_definition": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence_boundary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "testability": {
+          "$ref": "#/$defs/testability"
+        },
+        "implementation": {
+          "$ref": "#/$defs/implementation"
+        },
+        "references": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "formulae": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/formula"
+          }
+        },
+        "constraints": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "derivation": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ontological_extension": {
+          "$ref": "#/$defs/ontological_extension"
+        },
+        "variables": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "interpretive_use": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "joke": {
+          "type": "object",
+          "required": [
+            "value",
+            "unit",
+            "text",
+            "status",
+            "empirical_measurement",
+            "interpret_literally",
+            "cultural_note"
+          ],
+          "properties": {
+            "value": {
+              "type": "number"
+            },
+            "unit": {
+              "type": "string"
+            },
+            "text": {
+              "type": "string"
+            },
+            "status": {
+              "const": "playful_metaphor"
+            },
+            "empirical_measurement": {
+              "const": false
+            },
+            "interpret_literally": {
+              "const": false
+            },
+            "cultural_note": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
