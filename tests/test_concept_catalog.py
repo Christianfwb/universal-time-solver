@@ -1,8 +1,13 @@
 import json
 import math
+from copy import deepcopy
+
+import pytest
+from jsonschema import Draft202012Validator
 from pathlib import Path
 
 CATALOG = Path(__file__).parents[1] / "concepts" / "frequenzgesetz.public.v1.json"
+SCHEMA = Path(__file__).parents[1] / "concepts" / "schema.json"
 ALLOWED_STATUSES = {
     "established_relation",
     "ontological_interpretation",
@@ -52,3 +57,28 @@ def test_42_hz_joke_stays_a_joke():
     assert concept["joke"]["status"] == "playful_metaphor"
     assert concept["joke"]["empirical_measurement"] is False
     assert concept["joke"]["interpret_literally"] is False
+
+
+def test_schema_is_valid_and_catalog_conforms():
+    schema = json.loads(SCHEMA.read_text(encoding="utf-8"))
+    Draft202012Validator.check_schema(schema)
+    Draft202012Validator(schema).validate(load_catalog())
+
+
+@pytest.mark.parametrize("mutation", ["missing_boundary", "invalid_status", "missing_testability", "metaphor_as_measurement"])
+def test_schema_rejects_invalid_catalog(mutation):
+    schema = json.loads(SCHEMA.read_text(encoding="utf-8"))
+    catalog = deepcopy(load_catalog())
+    concept = catalog["concepts"][0]
+    if mutation == "missing_boundary":
+        del concept["evidence_boundary"]
+    elif mutation == "invalid_status":
+        concept["status"] = "proven_new_physics"
+    elif mutation == "missing_testability":
+        del concept["testability"]
+    else:
+        concept = next(item for item in catalog["concepts"] if item["id"] == "humor_play_phase_dynamics")
+        concept["joke"]["empirical_measurement"] = True
+    with pytest.raises(Exception) as exc:
+        Draft202012Validator(schema).validate(catalog)
+    assert exc.value.__class__.__name__ == "ValidationError"
