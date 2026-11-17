@@ -46,17 +46,21 @@ The metaphor does **not** mean that matter is literally read-only or that every 
 
 The earlier [Appendix A](APPENDIX_A_MASS_TIME_EMERGENCE.md) presents the related, separate hypothesis about characteristic particle periods, mass, and an undisclosed mechanism. No such mechanism is exposed or inferred here.
 
+**Stable structure and recoverable difference.** In the relational system-time investigation (Appendix C, forthcoming), temporal order is distinguished from rhythm and from distinguishability. A causal or mathematical order may exist as a relation without any system recording it. What ROM-like structures could add is operational: they may allow a temporal difference to be physically stored and later recognized, so that an order becomes readable rather than merely definable. This is a hypothesis about access to order, not a claim that order requires a recorder.
+
+**Thermodynamic reference.** Landauer's principle concerns the minimum thermodynamic cost associated with logically irreversible information erasure under suitable conditions. It does not imply that every write operation incurs the same cost. A record that can be erased or rewritten does not, by its mere existence, select a direction of time. The directedness of physical recording requires further attention to irreversible processes, boundary conditions, or causal structure, as discussed in B.6.
+
 ## B.4 Bose–Einstein condensates as a comparison
 
 A Bose–Einstein condensate is an experimentally studied quantum many-body state in which many bosons occupy the same quantum state under appropriate conditions.
 
 Cooling changes thermal motion, occupation distributions, and collective coherence. It does **not** remove the atoms or erase their rest masses, and it does not demonstrate a return to the proposed Null Space.
 
-The useful comparison for this research is narrower:
+The useful comparison for this research is narrower: **the constituents remain, while their collective state and coherence can change dramatically.** A Bose–Einstein condensate is not a classical coupled-oscillator system; condensation arises from quantum statistics and, where present, interactions. The analogy to synchronization models is therefore limited: both can exhibit changes in measures of collective order, but these measures need not be physically or mathematically identical.
 
-> **The constituents remain, while their collective state and coherence can change dramatically.**
+This suggests a concrete question for simulation and, in principle, experiment: **how do individual phase correlations, collective coherence, and the information accessible about the ensemble change across the condensation transition?** A classical coupled-oscillator toy-model analysis discussed in the system-time research reportedly found that stronger coupling increased its order parameter while shortening a defined phase-pattern distinguishability horizon. The corresponding script and reproducible results are **not currently included in this repository**, so this is a proposed comparison rather than verified evidence here. Whether a comparable trade-off exists in a quantum many-body transition remains open; the classical toy-model observation must not be treated as a result about condensates.
 
-In the “particle program” analogy, the constituent identity persists while the *operating state* and correlations of the ensemble change. This offers a physical example for studying organization and coherence, **not** a direct reversal of hypothesized particle creation.
+In the “particle program” analogy, constituent identity persists while the *operating state* and correlations change. This is a comparison for studying organization and coherence, **not** a direct reversal of hypothesized particle creation.
 
 ## B.5 From stable matter to life: an open question
 
@@ -68,7 +72,15 @@ A possible research direction is to ask how known physical interactions enable s
 
 These arrows are a *research map*, not a demonstrated unique origin-of-life pathway.
 
-A new effective system can possess behavior absent from an isolated component, without implying that its fundamental constituents acquire new fundamental laws. In particular, phase coherence or resonance alone is **not sufficient** to define life. Metabolism, boundary maintenance, heredity, variation, and evolutionary mechanisms require their own explicit treatment.
+A new effective system can possess behavior absent from an isolated component, without implying that its fundamental constituents acquire new fundamental laws. In particular, **neither phase coherence nor resonance nor stable storage alone is sufficient to define life**. A crystal has stable structure and can preserve physical differences, yet is not alive. In the program analogy, the proposed steps separating passive storage from active organization are a *research ladder*, not a definition:
+
+1. **Stable structure (ROM):** differences persist over a useful interval.
+2. **Stored information:** differences can be encoded and correlated.
+3. **Feedback on the system's own states:** stored information is accessed and influences subsequent dynamics.
+4. **Self-maintenance and adaptation:** feedback contributes to preservation or modification of organization under perturbations.
+5. **Possible basis for complex living systems:** metabolism, boundary maintenance, heredity, variation, and evolution require their own explicit treatment and are **not** derived here.
+
+Feedback alone does not explain life either. Its role in this map is specific: it marks the conceptual transition from a structure that preserves information to a system that uses retained information to influence itself. **ROM preserves; a feedback system can act on what it preserves.**
 
 The framework therefore poses, but does not answer:
 
