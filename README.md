@@ -60,6 +60,7 @@ This is an **alpha research and communication project**. The software calculatio
 
 ## Project map
 
+- [Appendix A — Mass, Characteristic Time, and Particle-State Emergence](docs/APPENDIX_A_MASS_TIME_EMERGENCE.md) — English research hypothesis, RAM/ROM analogy, protected mechanism and independent validation criteria
 - [ONTOLOGY.md](https://github.com/Christianfwb/universal-time-solver/blob/main/ONTOLOGY.md) — original conceptual framework
 - [ETHICS.md](https://github.com/Christianfwb/universal-time-solver/blob/main/ETHICS.md) — ethical and poetic layer
 - [PROOF.md](https://github.com/Christianfwb/universal-time-solver/blob/main/PROOF.md) — validation rules and evidence boundary
