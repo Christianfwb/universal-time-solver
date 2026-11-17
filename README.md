@@ -62,6 +62,7 @@ This is an **alpha research and communication project**. The software calculatio
 
 - [Appendix A — Mass, Characteristic Time, and Particle-State Emergence](docs/APPENDIX_A_MASS_TIME_EMERGENCE.md) — English research hypothesis, RAM/ROM analogy, protected mechanism and independent validation criteria
 - [Appendix B — Particle Programs, Coupling, Emergence, and Life](docs/APPENDIX_B_PARTICLE_PROGRAMS_EMERGENCE_LIFE.md) — exploratory research questions on interactions, collective states, information persistence, and biological organization
+- [Editorial note — A Bridge to Curiosity](docs/EDITORIAL_NOTE_BRIDGE_TO_CURIOSITY.md) — preserved German guiding words and English translation; future placement undecided
 - [ONTOLOGY.md](https://github.com/Christianfwb/universal-time-solver/blob/main/ONTOLOGY.md) — original conceptual framework
 - [ETHICS.md](https://github.com/Christianfwb/universal-time-solver/blob/main/ETHICS.md) — ethical and poetic layer
 - [PROOF.md](https://github.com/Christianfwb/universal-time-solver/blob/main/PROOF.md) — validation rules and evidence boundary
